@@ -51,9 +51,7 @@ class AuthorListCell : UITableViewCell
     {
         authorName.text = ""
         authorEmailId.text = ""
-        authorImageView.setFallbackImageForRequest(fallBack:UIImage.init(named: "fallback-packshot") ?? UIImage())
-        
-        
+        authorImageView.setHighResImageURL(highResImageURL: "", title: nil, handler: nil)
         
     }
     
