@@ -96,9 +96,13 @@ class AuthorListViewController: UITableViewController, AuthorListDisplayLogic
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        fetchAuthors()
+        
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchAuthors()
+    }
     /**
      Call this function to get list of Authors.
      */
