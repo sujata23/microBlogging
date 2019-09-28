@@ -65,10 +65,10 @@ class AuthorListInteractorTests: XCTestCase
     
     // MARK: Spied methods
     
-    override func fetchAuthorList(url: String, pageNumber: Int, completion: @escaping ([Author]?, MBError?) -> Void)
+    override func fetchAuthorList(url: String, pageNumber: Int, completionHandler: @escaping ([Author]?, MBError?) -> Void)
     {
         fetchAuthorsCalled = true
-        completion([Seeds.Authors.firstAuthor , Seeds.Authors.secondAuthor], nil)
+        completionHandler([Seeds.Authors.firstAuthor , Seeds.Authors.secondAuthor], nil)
     }
     
   }

@@ -16,10 +16,4 @@ extension String {
         return self.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
-    func splitString(character: String) -> [String]
-    {
-        return self.components(separatedBy: character)
-    }
-    
-    
 }
