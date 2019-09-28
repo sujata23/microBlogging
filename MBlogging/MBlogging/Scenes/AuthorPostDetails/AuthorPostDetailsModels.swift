@@ -20,19 +20,24 @@ enum AuthorPostDetails
     {
         struct Request
         {
+            var authorId: String?
         }
         struct Response
         {
-            
+            var postList: [Post]?
+            var error:    MBError?
         }
         struct ViewModel
         {
             
             struct DisplayedPost
             {
-                
+                var title: String
+                var date:  String
+                var body:  String
             }
             
+            var postList: [DisplayedPost]
             
             
         }
@@ -51,9 +56,14 @@ enum AuthorPostDetails
         {
             struct DisplayAuthor
             {
-               
+                var id:        String
+                var name:      String
+                var userName:  String
+                var email:     String
+                var avatarUrl: String
             }
-
+            var authorDetails: DisplayAuthor
+            
         }
     }
 }

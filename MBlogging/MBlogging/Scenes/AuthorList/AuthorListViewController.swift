@@ -132,6 +132,8 @@ class AuthorListViewController: BaseTableViewController, AuthorListDisplayLogic
     }
     
     
+    //MARK: Data Fetch functions
+    
     /**
      Call this function to get list of Authors.
      */

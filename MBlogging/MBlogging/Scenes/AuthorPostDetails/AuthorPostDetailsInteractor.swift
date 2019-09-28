@@ -14,7 +14,16 @@ import UIKit
 
 protocol AuthorPostDetailsBusinessLogic
 {
+    /**
+     Use this function to get author details
+     */
+    
     func getAuthorDetails(request: AuthorPostDetails.FetchAuthorDetails.Request)
+    
+    /**
+     Use this function to get author details of sepecific author ,author id will be used
+     */
+    
     func fetchPostDetails(request: AuthorPostDetails.FetchPostDetails.Request)
     
 }
@@ -22,16 +31,16 @@ protocol AuthorPostDetailsBusinessLogic
 protocol AuthorPostDetailsDataStore
 {
     var author: Author! { get set }
-
+    
 }
 
 class AuthorPostDetailsInteractor: AuthorPostDetailsBusinessLogic, AuthorPostDetailsDataStore
 {
     var author: Author!
+    var postForSpecificAuthor : [Post]?
     
     var presenter: AuthorPostDetailsPresentationLogic?
-    var worker: AuthorPostDetailsWorker?
-    //var name: String = ""
+    var worker: AuthorPostDetailsWorker = AuthorPostDetailsWorker()
     
     
     
@@ -39,21 +48,43 @@ class AuthorPostDetailsInteractor: AuthorPostDetailsBusinessLogic, AuthorPostDet
     
     func getAuthorDetails(request: AuthorPostDetails.FetchAuthorDetails.Request)
     {
-       
+        let response = AuthorPostDetails.FetchAuthorDetails.Response.init(author: author)
+        presenter?.presentAuthor(response: response)
     }
     
     
     func fetchPostDetails(request: AuthorPostDetails.FetchPostDetails.Request)
     {
+        guard let authorId = request.authorId else
+        {
+            let mbError = MBError.init(mbErrorCode: MBErrorCode.GeneralError)
+            mbError.mbErrorDebugInfo = "Author id is missing for fetching posts"
+            
+            let response = AuthorPostDetails.FetchPostDetails.Response(postList: nil, error: mbError)
+            presenter?.presentPostList(response: response)
+            
+            return
+        }
         
+        weak var weakself = self
+        
+        worker.fetchPostDetails(url: Constants.baseURL, authorID: authorId) { (postList, error) in
+            
+            if let postList = postList
+            {
+                
+                weakself?.postForSpecificAuthor = postList
+                
+                let response = AuthorPostDetails.FetchPostDetails.Response(postList: postList, error: nil)
+                weakself?.presenter?.presentPostList(response: response)
+                
+            }
+            else if let  error = error
+            {
+                let response = AuthorPostDetails.FetchPostDetails.Response(postList: nil, error: error)
+                weakself?.presenter?.presentPostList(response: response)
+            }
+        }
     }
     
-//    func doSomething(request: AuthorPostDetails.Something.Request)
-//    {
-//        worker = AuthorPostDetailsWorker()
-//        worker?.doSomeWork()
-//        
-//        let response = AuthorPostDetails.Something.Response()
-//        presenter?.presentSomething(response: response)
-//    }
 }

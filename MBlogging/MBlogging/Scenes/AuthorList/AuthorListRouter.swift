@@ -49,6 +49,7 @@ class AuthorListRouter: NSObject, AuthorListRoutingLogic, AuthorListDataPassing
     
     func passDataToAuthorDetails(source: AuthorListDataStore, destination: inout AuthorPostDetailsDataStore)
     {
-        
+        let selectedRow = viewController?.tableView.indexPathForSelectedRow?.row
+        destination.author = source.authors?[selectedRow!]
     }
 }

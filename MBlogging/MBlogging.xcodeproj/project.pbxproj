@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		F01300D2233E9DA000F18731 /* AuthorPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01300D1233E9DA000F18731 /* AuthorPresenterTests.swift */; };
+		F02BC1A8233FA91C00E96C33 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02BC1A7233FA91C00E96C33 /* Post.swift */; };
+		F02BC1AB233FAFBA00E96C33 /* PostDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02BC1A9233FAFBA00E96C33 /* PostDetailsCell.swift */; };
+		F02BC1AC233FAFBA00E96C33 /* PostDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02BC1AA233FAFBA00E96C33 /* PostDetailsCell.xib */; };
+		F02BC1AE233FC30500E96C33 /* UtilityClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02BC1AD233FC30500E96C33 /* UtilityClass.swift */; };
+		F02BC1B0233FC84A00E96C33 /* String+Shortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02BC1AF233FC84A00E96C33 /* String+Shortcut.swift */; };
 		F02EB935233F69D400A18AA1 /* CustomSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02EB930233F69D400A18AA1 /* CustomSectionHeader.swift */; };
 		F02EB936233F69D400A18AA1 /* CustomSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02EB931233F69D400A18AA1 /* CustomSectionHeader.xib */; };
 		F02EB937233F69D400A18AA1 /* AuthorListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02EB933233F69D400A18AA1 /* AuthorListCell.swift */; };
@@ -55,6 +60,11 @@
 
 /* Begin PBXFileReference section */
 		F01300D1233E9DA000F18731 /* AuthorPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorPresenterTests.swift; sourceTree = "<group>"; };
+		F02BC1A7233FA91C00E96C33 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		F02BC1A9233FAFBA00E96C33 /* PostDetailsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsCell.swift; sourceTree = "<group>"; };
+		F02BC1AA233FAFBA00E96C33 /* PostDetailsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostDetailsCell.xib; sourceTree = "<group>"; };
+		F02BC1AD233FC30500E96C33 /* UtilityClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityClass.swift; sourceTree = "<group>"; };
+		F02BC1AF233FC84A00E96C33 /* String+Shortcut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Shortcut.swift"; sourceTree = "<group>"; };
 		F02EB930233F69D400A18AA1 /* CustomSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSectionHeader.swift; sourceTree = "<group>"; };
 		F02EB931233F69D400A18AA1 /* CustomSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomSectionHeader.xib; sourceTree = "<group>"; };
 		F02EB933233F69D400A18AA1 /* AuthorListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorListCell.swift; sourceTree = "<group>"; };
@@ -134,6 +144,8 @@
 		F02EB932233F69D400A18AA1 /* CustomCell */ = {
 			isa = PBXGroup;
 			children = (
+				F02BC1A9233FAFBA00E96C33 /* PostDetailsCell.swift */,
+				F02BC1AA233FAFBA00E96C33 /* PostDetailsCell.xib */,
 				F02EB933233F69D400A18AA1 /* AuthorListCell.swift */,
 				F02EB934233F69D400A18AA1 /* AuthorListCell.xib */,
 			);
@@ -230,6 +242,8 @@
 		F058752A233D75D700F0E5D1 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				F02BC1AF233FC84A00E96C33 /* String+Shortcut.swift */,
+				F02BC1AD233FC30500E96C33 /* UtilityClass.swift */,
 				F02EB956233F6A8400A18AA1 /* NetworkManager */,
 				F02EB954233F6A8400A18AA1 /* ImageDownloader.swift */,
 				F02EB955233F6A8400A18AA1 /* TempInMemoryCache.swift */,
@@ -242,6 +256,7 @@
 		F0F6C637233DE4C80001F92E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F02BC1A7233FA91C00E96C33 /* Post.swift */,
 				F0F6C63A233DE5200001F92E /* Author.swift */,
 			);
 			path = Models;
@@ -361,6 +376,7 @@
 				F02EB938233F69D400A18AA1 /* AuthorListCell.xib in Resources */,
 				F02EB936233F69D400A18AA1 /* CustomSectionHeader.xib in Resources */,
 				F0587503233D353400F0E5D1 /* Assets.xcassets in Resources */,
+				F02BC1AC233FAFBA00E96C33 /* PostDetailsCell.xib in Resources */,
 				F0587501233D353300F0E5D1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -383,13 +399,17 @@
 				F02EB96A233F6B8F00A18AA1 /* AuthorPostDetailsViewController.swift in Sources */,
 				F02EB948233F69DF00A18AA1 /* AuthorListRouter.swift in Sources */,
 				F02EB95E233F6A8D00A18AA1 /* CustomImageView.swift in Sources */,
+				F02BC1AB233FAFBA00E96C33 /* PostDetailsCell.swift in Sources */,
 				F02EB949233F69DF00A18AA1 /* AuthorListWorker.swift in Sources */,
 				F02EB95B233F6A8400A18AA1 /* NetworkManager.swift in Sources */,
 				F02EB94B233F69DF00A18AA1 /* AuthorListViewController.swift in Sources */,
 				F0F6C63B233DE5200001F92E /* Author.swift in Sources */,
 				F02EB967233F6B8F00A18AA1 /* AuthorPostDetailsModels.swift in Sources */,
+				F02BC1A8233FA91C00E96C33 /* Post.swift in Sources */,
 				F02EB937233F69D400A18AA1 /* AuthorListCell.swift in Sources */,
 				F02EB965233F6B8F00A18AA1 /* AuthorPostDetailsPresenter.swift in Sources */,
+				F02BC1AE233FC30500E96C33 /* UtilityClass.swift in Sources */,
+				F02BC1B0233FC84A00E96C33 /* String+Shortcut.swift in Sources */,
 				F02EB969233F6B8F00A18AA1 /* AuthorPostDetailsInteractor.swift in Sources */,
 				F02EB935233F69D400A18AA1 /* CustomSectionHeader.swift in Sources */,
 				F02EB95A233F6A8400A18AA1 /* TempInMemoryCache.swift in Sources */,

@@ -14,26 +14,101 @@ import UIKit
 
 protocol AuthorPostDetailsPresentationLogic
 {
+    /**
+     Use this function modify author response and modify nd create viewmodel to display
+     */
+    
     func presentAuthor(response:  AuthorPostDetails.FetchAuthorDetails.Response)
-
+    
+    /**
+     Use this function modify post list response and modify nd create viewmodel to display
+     */
+    
     func presentPostList(response: AuthorPostDetails.FetchPostDetails.Response)
 }
 
 class AuthorPostDetailsPresenter: AuthorPostDetailsPresentationLogic
 {
-  weak var viewController: AuthorPostDetailsDisplayLogic?
-  
-  // MARK: Do something
+    weak var viewController: AuthorPostDetailsDisplayLogic?
+    var displayedPostList: [AuthorPostDetails.FetchPostDetails.ViewModel.DisplayedPost] = []
+    
+    
+    
+    // MARK: AuthorPostDetailsPresentationLogic functions
     
     func presentAuthor(response:  AuthorPostDetails.FetchAuthorDetails.Response)
     {
+        let author = response.author
+        let displayedAuthor = AuthorPostDetails.FetchAuthorDetails.ViewModel.DisplayAuthor(id: String(author.id), name: author.name , userName : author.userName , email : author.email , avatarUrl : author.avatarUrl)
+        let viewModel = AuthorPostDetails.FetchAuthorDetails.ViewModel.init(authorDetails: displayedAuthor)
+        self.viewController?.displayAuthorDetails(viewModel: viewModel)
         
     }
     
     func presentPostList(response: AuthorPostDetails.FetchPostDetails.Response)
     {
+        if let postList = response.postList
+        {
+            for post in postList {
+                
+                let dateToShow = dateModificationForPost(sourceDate: post.date)
+                let displayedPost = AuthorPostDetails.FetchPostDetails.ViewModel.DisplayedPost(title: post.title, date: dateToShow, body: post.body)
+                
+                displayedPostList.append(displayedPost)
+            }
+            
+            displayedPostList = displayedPostList.reversed()
+            let viewModel = AuthorPostDetails.FetchPostDetails.ViewModel.init(postList: displayedPostList)
+            viewController?.displayPostDetails(viewModel: viewModel)
+        }
+        else if let error = response.error
+        {
+            viewController?.errorReceivedInAuthorFetchRequest(error: error)
+            
+        }
+        else
+        {
+            //Generic error
+            let mbError = MBError.init(mbErrorCode: MBErrorCode.ServerError)
+            mbError.mbErrorDebugInfo = "Generic error while fetching Post"
+            viewController?.errorReceivedInAuthorFetchRequest(error: mbError)
+            
+        }
         
     }
-  
-  
+    
+    
+    //MARK: Data modification function
+    
+    /**
+        Modify date to show in post viewmodel
+    */
+    
+    func dateModificationForPost(sourceDate : String?) -> String
+    {
+        guard let sourceDate = sourceDate else {
+            return ""
+        }
+        
+        guard sourceDate.trim().count != 0 else {
+            return ""
+        }
+        
+        let initialDate = UtilityClass.stringToDateFormat(dateInString: sourceDate)
+        
+        var dateInString = ""
+        
+        if let initialDate = initialDate
+        {
+            dateInString = UtilityClass.dateToStringFormat(date: initialDate)
+        }
+        else
+        {
+            dateInString = ""
+        }
+        
+        return dateInString 
+    }
+    
+    
 }

@@ -14,7 +14,82 @@ import UIKit
 
 class AuthorPostDetailsWorker
 {
-  func doSomeWork()
-  {
-  }
+    let defaultSession = URLSession(configuration: .default)
+    var dataTask: URLSessionDataTask?
+    
+    
+    /**
+     Below request to fetch author list from Server
+     parameter 1:- base url : to fetch author list
+     parameter 2:- authorID : authorid to get post details of specific author
+     
+     */
+    func fetchPostDetails(url : String , authorID : String,completionHandler: @escaping (_: [Post]?, _: MBError?) -> Void)
+    {
+        var postFectchUrl = url
+        postFectchUrl = postFectchUrl + Constants.postURLParameter
+        
+        if var urlComponents = URLComponents(string: postFectchUrl) {
+            urlComponents.query = "authorId=\(authorID)&_sort=date"
+            
+            guard let url = urlComponents.url else {
+                
+                let mbError = MBError.init(mbErrorCode: MBErrorCode.GeneralError)
+                mbError.mbErrorDebugInfo = "problem with URL while fetching request for post list for author id \(authorID)"
+                completionHandler(nil , mbError)
+                return
+            }
+            dataTask =
+                defaultSession.dataTask(with: url) { [weak self] data, response, error in
+                    defer {
+                        self?.dataTask = nil
+                    }
+                    if let error = error {
+                        
+                        let mbError = MBError.init(mbErrorCode: MBErrorCode.ServerError)
+                        mbError.mbErrorDebugInfo = error.localizedDescription + "problem for post list for author id \(authorID)"
+                        completionHandler(nil , mbError)
+                        
+                    } else if
+                        let data = data,
+                        let response = response as? HTTPURLResponse,
+                        response.statusCode == 200 {
+                        
+                        DispatchQueue.main.async {
+                            do
+                            {
+                                
+                                let decoder = JSONDecoder()
+                                let postList = try decoder.decode([Post].self, from: data)
+                                
+                                completionHandler(postList , nil)
+                                
+                            }
+                            catch let jsonErr {
+                                
+                                let mbError = MBError.init(mbErrorCode: MBErrorCode.UnableToParseErrorJson)
+                                mbError.mbErrorDebugInfo = jsonErr.localizedDescription + "problem for Post list for author id \(authorID)"
+                                completionHandler(nil , mbError)
+                            }
+                        }
+                    }
+                    else
+                    {
+                        let mbError = MBError.init(mbErrorCode: MBErrorCode.ServerError)
+                        mbError.mbErrorDebugInfo = "Data issue Post list for author id \(authorID)"
+                        completionHandler(nil , mbError)
+                    }
+            }
+            dataTask?.resume()
+        }
+        else
+        {
+            let mbError = MBError.init(mbErrorCode: MBErrorCode.GeneralError)
+            mbError.mbErrorDebugInfo = "problem with URL while fetching request for Post list for author id \(authorID)"
+            completionHandler(nil , mbError)
+        }
+        
+    }
+    
+    
 }
