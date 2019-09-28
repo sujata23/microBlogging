@@ -16,7 +16,6 @@ import UIKit
 enum AuthorList
 {
   // MARK: Use cases
-  
   enum FetchAuthorList
   {
     struct Request

@@ -40,9 +40,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="R8B-MU-mgB" kind="show" identifier="ShowAuthorDetails" id="vHx-6d-9M0"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -56,10 +53,10 @@
             </objects>
             <point key="canvasLocation" x="2301.449275362319" y="75.669642857142847"/>
         </scene>
-        <!--Author Details View Controller-->
+        <!--Author Post Details View Controller-->
         <scene sceneID="leQ-aA-GV2">
             <objects>
-                <tableViewController id="R8B-MU-mgB" customClass="AuthorDetailsViewController" customModule="MBlogging" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AuthorPostDetailsViewController" id="R8B-MU-mgB" customClass="AuthorPostDetailsViewController" customModule="MBlogging" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="lQj-oU-oia">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

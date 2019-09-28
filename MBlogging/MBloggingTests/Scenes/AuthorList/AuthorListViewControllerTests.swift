@@ -133,7 +133,7 @@ class AuthorListViewControllerTests: XCTestCase {
         let cell = currentControllerUnderTest.tableView(tableView!, cellForRowAt: indexPath)
         
         // Then
-        XCTAssertEqual(cell.textLabel?.text, "TestAuthor1", "A properly configured table view cell should display the authors name")
-        XCTAssertEqual(cell.detailTextLabel?.text, "testauthor1@testemailid.com", "A properly configured table view cell should display the authors emailid")
+        XCTAssertEqual(cell.authorName?.text, "TestAuthor1", "A properly configured table view cell should display the authors name")
+        XCTAssertEqual(cell.authorEmailId?.text, "testauthor1@testemailid.com", "A properly configured table view cell should display the authors emailid")
     }
 }

@@ -26,18 +26,21 @@ protocol AuthorListDataStore
 class AuthorListInteractor: AuthorListBusinessLogic, AuthorListDataStore
 {
     var presenter: AuthorListPresentationLogic?
-    var worker: AuthorListWorker =  AuthorListWorker()
-    var authors: [Author]?
+    var worker: AuthorListWorker = AuthorListWorker()
+    var authors: [Author]? = [Author]()
     
     
     
     func fetchAuthors(request: AuthorList.FetchAuthorList.Request)
     {
         weak var weakself = self
-        worker.fetchAuthorList(url: request.urlToRequest, pageNumber: request.pageNumber, completion: { (authorList, error) in
+        worker.fetchAuthorList(url: request.urlToRequest, pageNumber: request.pageNumber, completionHandler: { (authorList, error) in
             
-            if let authors = authorList 
+            if let authors = authorList
             {
+                
+                weakself?.authors?.append(contentsOf: authors)
+                
                 let response = AuthorList.FetchAuthorList.Response(authors: authors, error: nil)
                 weakself?.presenter?.presentAuthorList(response: response)
             }

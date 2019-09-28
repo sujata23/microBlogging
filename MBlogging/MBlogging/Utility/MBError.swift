@@ -15,10 +15,17 @@ import Foundation
 
 public enum MBErrorCode : Int {
     
+    //Represent Generic error
     case GeneralError = 100
+    
+    //Represent parse error
     case UnableToParseErrorJson
+    
+    //Represent server error
     case ServerError
     
+    //Represent Network error
+    case NetworkError
 }
 
 
@@ -32,7 +39,7 @@ public class MBError : NSError {
     
     public var erroCode = MBErrorCode(rawValue: 0)
     /**
-     This sport error code, will need to triage issue. Should include while sending an error log message to ominture.
+     This error code, will need to triage issue. Should include while sending an error log message to ominture.
      */
     public var mbErrorCodeString: String? = ""
     /**
@@ -45,12 +52,19 @@ public class MBError : NSError {
     public var mbErrorDescription: String? = ""
     
     /**
-     additional information logged to Splunk.
+     additional information logged to Server.
      */
     public var mbErrorDebugInfo: String? = ""
     
     
+    /**
+     Init functions
+     */
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
+   
     public init(mbErrorCode errorCode: MBErrorCode) {
         super.init(domain: MBErrorDomainName, code: errorCode.rawValue, userInfo: nil)
         
@@ -74,13 +88,14 @@ public class MBError : NSError {
             errorCode = "MB03"
             
             
+        case .NetworkError:
+            errorCode = "MB04"
+
         }
         return errorCode
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+   
     
     
     

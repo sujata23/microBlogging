@@ -15,13 +15,13 @@ import UIKit
 protocol AuthorListDisplayLogic: class
 {
     /**
-       callback from presenter to show Authors list in View
-       We show the data from ViewModel
-    */
+     callback from presenter to show Authors list in View
+     We show the data from ViewModel
+     */
     func displayAuthorList(viewModel: AuthorList.FetchAuthorList.ViewModel)
     
     /**
-     callback from presenter about error it received while fecting authors data
+     callback from presenter about error it received while fetching authors data
      As we are doing pagination , in case of error We are reducing one count of the current page
      In this function we can show the error to user , if required
      */
@@ -30,9 +30,14 @@ protocol AuthorListDisplayLogic: class
 }
 
 
-class AuthorListViewController: UITableViewController, AuthorListDisplayLogic
+class AuthorListViewController: BaseTableViewController, AuthorListDisplayLogic
 {
     
+    //Constant
+    
+    static let cellIdentifier =  "authorListCell"
+    
+    //Clean Architectire Variables
     
     var interactor: AuthorListBusinessLogic?
     var router: (NSObjectProtocol & AuthorListRoutingLogic & AuthorListDataPassing)?
@@ -40,9 +45,8 @@ class AuthorListViewController: UITableViewController, AuthorListDisplayLogic
     
     //Properties
     
-    var pageToBeFetched = 1 // Maintains page number to be fetched
-    var isOngoingRequest = false //check whether author fetch request is already ongoing or not
-
+    var pageToBeFetched = 1 // Maintains page number to be fetched. Value will be incremented with User scrolling
+    
     
     // MARK: Object lifecycle
     
@@ -58,6 +62,19 @@ class AuthorListViewController: UITableViewController, AuthorListDisplayLogic
         setup()
     }
     
+    // MARK: View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        setUpView()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchAuthors()
+    }
     
     // MARK: Setup
     
@@ -79,30 +96,42 @@ class AuthorListViewController: UITableViewController, AuthorListDisplayLogic
     }
     
     
-    // MARK: Routing
+    // MARK: Routing to different Controller
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    func navigateToAuthorDetailsPage()
     {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
+        if let router = router {
+            router.routeToAuthorDetailPage()
         }
-    }
-    
-    // MARK: View lifecycle
-    
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        fetchAuthors()
+    
+    
+    //MARK: Set up View
+    
+    /**
+     Use this function to create or configure views you want to show in author list page
+     */
+    
+    func setUpView()
+    {
+        title = "Authors"
+        self.isPaginationRequired = true
+        registerTableViewCell()
     }
+    
+    /**
+     Register custom cell for TableView
+     */
+    
+    func registerTableViewCell()
+    {
+        let authorListCell = UINib(nibName: "AuthorListCell", bundle: nil)
+        self.tableView.register(authorListCell, forCellReuseIdentifier: AuthorListViewController.cellIdentifier)
+    }
+    
+    
     /**
      Call this function to get list of Authors.
      */
@@ -117,17 +146,16 @@ class AuthorListViewController: UITableViewController, AuthorListDisplayLogic
     
     func displayAuthorList(viewModel: AuthorList.FetchAuthorList.ViewModel)
     {
-        //nameTextField.text = viewModel.name
         displayedAuthors = viewModel.authorList
         tableView.reloadData()
         self.isOngoingRequest = false
-
+        
     }
     
     func errorReceivedInAuthorFetchRequest(error: MBError) {
         
         self.isOngoingRequest = false
-
+        
         if pageToBeFetched != 1
         {
             pageToBeFetched = pageToBeFetched - 1
@@ -152,44 +180,38 @@ class AuthorListViewController: UITableViewController, AuthorListDisplayLogic
         return displayedAuthors.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> AuthorListCell
     {
         let displayedAuthor = displayedAuthors[indexPath.row]
-        var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        if cell == nil {
-            cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
-        }
-        cell?.textLabel?.text = displayedAuthor.name
-        cell?.detailTextLabel?.text = displayedAuthor.id
-        return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: AuthorListViewController.cellIdentifier) as! AuthorListCell
+        cell.initWith(authorDetails: displayedAuthor)
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 140.0
+        return AuthorListCell.retreiveCellHeight()
     }
     
     
-    // MARK: - ScrollView Delegate
+    //MARK: UITableView Delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        
-        
-        if offsetY > contentHeight - scrollView.frame.height * 4 {
-            if !isOngoingRequest {
-                fetchNextBatchAuthors()
-            }
-            
-        }
+        navigateToAuthorDetailsPage()
     }
     
-    //MARK: pagination author List
+    //MARK: Pagination functions
     
-    func fetchNextBatchAuthors()
+    
+    /**
+     Use this function to implement functionality required when user scroll down in UITableView
+     */
+    override func fetchNextBatchRequest()
     {
         pageToBeFetched =  pageToBeFetched + 1
         fetchAuthors()
     }
+    
+    
     
 }

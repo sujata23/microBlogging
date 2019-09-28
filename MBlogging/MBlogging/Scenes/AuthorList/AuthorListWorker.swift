@@ -18,7 +18,13 @@ class AuthorListWorker
     var dataTask: URLSessionDataTask?
     
     
-    func fetchAuthorList(url: String, pageNumber : Int ,  completion: @escaping (_: [Author]?, _: MBError?) -> Void)
+    /**
+       Below request to fetch author list from Server
+     parameter 1:- base url
+     parameter 2:- page number to fetch(Every page contains 10 authors)
+     
+    */
+    func fetchAuthorList(url: String, pageNumber : Int ,  completionHandler: @escaping (_: [Author]?, _: MBError?) -> Void)
     {
         var authorFectchUrl = url
         authorFectchUrl = authorFectchUrl + Constants.authorURLParameter
@@ -30,7 +36,7 @@ class AuthorListWorker
                 
                 let mbError = MBError.init(mbErrorCode: MBErrorCode.GeneralError)
                 mbError.mbErrorDebugInfo = "problem with URL while fetching request for Author list for page index \(pageNumber)"
-                completion(nil , mbError)
+                completionHandler(nil , mbError)
                 return
             }
             dataTask =
@@ -43,7 +49,7 @@ class AuthorListWorker
                         
                         let mbError = MBError.init(mbErrorCode: MBErrorCode.ServerError)
                         mbError.mbErrorDebugInfo = error.localizedDescription + "problem for Author list for page index \(pageNumber)"
-                        completion(nil , mbError)
+                        completionHandler(nil , mbError)
                         
                     } else if
                         let data = data,
@@ -57,14 +63,14 @@ class AuthorListWorker
                                 let decoder = JSONDecoder()
                                 let authorList = try decoder.decode([Author].self, from: data)
                                 
-                                completion(authorList , nil)
+                                completionHandler(authorList , nil)
                                 
                             }
                             catch let jsonErr {
                                 
                                 let mbError = MBError.init(mbErrorCode: MBErrorCode.UnableToParseErrorJson)
                                 mbError.mbErrorDebugInfo = jsonErr.localizedDescription + "problem for Author list for page index \(pageNumber)"
-                                completion(nil , mbError)
+                                completionHandler(nil , mbError)
                             }
                         }
                     }
@@ -72,7 +78,7 @@ class AuthorListWorker
                     {
                         let mbError = MBError.init(mbErrorCode: MBErrorCode.ServerError)
                         mbError.mbErrorDebugInfo = "Data issue Author list for page index \(pageNumber)"
-                        completion(nil , mbError)
+                        completionHandler(nil , mbError)
                     }
             }
             dataTask?.resume()
@@ -81,7 +87,7 @@ class AuthorListWorker
         {
             let mbError = MBError.init(mbErrorCode: MBErrorCode.GeneralError)
             mbError.mbErrorDebugInfo = "problem with URL while fetching request for Author list for page index \(pageNumber)"
-            completion(nil , mbError)
+            completionHandler(nil , mbError)
         }
         
     }
