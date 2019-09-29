@@ -46,6 +46,7 @@
 		F040DFE423411E5D001963AF /* CommentSectionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFDE23411E5D001963AF /* CommentSectionInteractor.swift */; };
 		F040DFE6234120B9001963AF /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFE5234120B9001963AF /* Comment.swift */; };
 		F040DFE92341243B001963AF /* BaseWorkerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFE82341243B001963AF /* BaseWorkerClass.swift */; };
+		F040DFEC234132A5001963AF /* BaseWorkerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFEB234132A5001963AF /* BaseWorkerTest.swift */; };
 		F05874FC233D353300F0E5D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05874FB233D353300F0E5D1 /* AppDelegate.swift */; };
 		F0587501233D353300F0E5D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F05874FF233D353300F0E5D1 /* Main.storyboard */; };
 		F0587503233D353400F0E5D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0587502233D353400F0E5D1 /* Assets.xcassets */; };
@@ -111,6 +112,7 @@
 		F040DFDE23411E5D001963AF /* CommentSectionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSectionInteractor.swift; sourceTree = "<group>"; };
 		F040DFE5234120B9001963AF /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		F040DFE82341243B001963AF /* BaseWorkerClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWorkerClass.swift; sourceTree = "<group>"; };
+		F040DFEB234132A5001963AF /* BaseWorkerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWorkerTest.swift; sourceTree = "<group>"; };
 		F05874F8233D353300F0E5D1 /* MBlogging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MBlogging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F05874FB233D353300F0E5D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0587500233D353300F0E5D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -262,6 +264,14 @@
 			path = BaseWorker;
 			sourceTree = "<group>";
 		};
+		F040DFEA2341326B001963AF /* BaseWorker */ = {
+			isa = PBXGroup;
+			children = (
+				F040DFEB234132A5001963AF /* BaseWorkerTest.swift */,
+			);
+			path = BaseWorker;
+			sourceTree = "<group>";
+		};
 		F05874EF233D353300F0E5D1 = {
 			isa = PBXGroup;
 			children = (
@@ -346,6 +356,7 @@
 		F0F6C687233E16A10001F92E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				F040DFEA2341326B001963AF /* BaseWorker */,
 				F0F6C688233E16A10001F92E /* AuthorList */,
 				F08C12B5233FFBE100FC61B0 /* PostDetails */,
 			);
@@ -509,6 +520,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F040DFEC234132A5001963AF /* BaseWorkerTest.swift in Sources */,
 				F0F6C680233E149F0001F92E /* MBloggingTests.swift in Sources */,
 				F0F6C68C233E21350001F92E /* AuthorListInteractorTests.swift in Sources */,
 				F0D57BA2234083B500C6267B /* AuthorPostInteractorTests.swift in Sources */,

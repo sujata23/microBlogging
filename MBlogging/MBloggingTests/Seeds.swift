@@ -34,4 +34,11 @@ struct Seeds
         static let modifiedDate = "Dec 5, 2017"
         
     }
+    
+    struct Order
+    {
+        static let ascOrderQueryStr = "_sort=date&_order=asc"
+        static let descOrderQueryStr = "_sort=date&_order=desc"
+        
+    }
 }

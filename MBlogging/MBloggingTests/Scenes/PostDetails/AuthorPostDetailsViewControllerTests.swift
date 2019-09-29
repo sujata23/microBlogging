@@ -45,6 +45,7 @@ class AuthorPostDetailsViewControllerTests: XCTestCase {
     
     class PostDetailsBusinessLogicSpy: AuthorPostDetailsBusinessLogic , AuthorPostDetailsDataStore
     {
+
         var author: Author!
         
     
@@ -59,7 +60,7 @@ class AuthorPostDetailsViewControllerTests: XCTestCase {
             fetchAuthorCalled = true
         }
         
-        func fetchPostDetails(request: AuthorPostDetails.FetchPostDetails.Request) {
+        func fetchPostDetails(request: AuthorPostDetails.FetchPostDetails.Request , order: SortOrder) {
             fetchPostCalled = true
         }
         

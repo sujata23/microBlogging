@@ -19,4 +19,20 @@ class BaseWorkerClass
         configuration.timeoutIntervalForResource = 30 // seconds
         return URLSession(configuration: .default)
     }()
+    
+    func fetchRequestQueryParameterFor(order : SortOrder) -> String
+    {
+        if order == .ascending
+        {
+            return "_sort=date&_order=asc"
+        }
+        else if order == .decending
+        {
+            return "_sort=date&_order=desc"
+        }
+        else
+        {
+            return ""
+        }
+    }
 }

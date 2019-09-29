@@ -8,6 +8,15 @@
 
 import Foundation
 
+/**
+ This order will be used to control the order of the response we want.
+ Currently will be used by post list and comment list
+ 
+ */
+enum SortOrder :String{
+    case ascending
+    case decending
+}
 
 class Constants
 {

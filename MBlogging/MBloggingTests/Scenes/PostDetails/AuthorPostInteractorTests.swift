@@ -57,7 +57,7 @@ class AuthorPostInteractorTests: XCTestCase
     var fetchPostListCalled = false
     
     // MARK: Spied methods
-    override func fetchPostDetails(url : String , authorID : String,completionHandler: @escaping (_: [Post]?, _: MBError?) -> Void)
+    override func fetchPostDetails(url : String , authorID : String, order : SortOrder , completionHandler: @escaping (_: [Post]?, _: MBError?) -> Void)
     {
         fetchPostListCalled = true
         completionHandler([Seeds.Posts.firstPost , Seeds.Posts.secondPost], nil)
@@ -95,7 +95,7 @@ class AuthorPostInteractorTests: XCTestCase
 
         // When
         let request = AuthorPostDetails.FetchPostDetails.Request(authorId: String(interactorUnderTest.author.id))
-        interactorUnderTest.fetchPostDetails(request: request)
+        interactorUnderTest.fetchPostDetails(request: request, order: .ascending)
 
         // Then
         XCTAssert(postWorkerSpy.fetchPostListCalled, "fetchPostDetails() should ask PostListWorker to fetch Posts")

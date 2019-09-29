@@ -24,7 +24,7 @@ protocol AuthorPostDetailsBusinessLogic
      Use this function to get author details of sepecific author ,author id will be used
      */
     
-    func fetchPostDetails(request: AuthorPostDetails.FetchPostDetails.Request)
+    func fetchPostDetails(request: AuthorPostDetails.FetchPostDetails.Request , order : SortOrder)
     
 }
 
@@ -53,7 +53,7 @@ class AuthorPostDetailsInteractor: AuthorPostDetailsBusinessLogic, AuthorPostDet
     }
     
     
-    func fetchPostDetails(request: AuthorPostDetails.FetchPostDetails.Request)
+    func fetchPostDetails(request: AuthorPostDetails.FetchPostDetails.Request , order : SortOrder)
     {
         guard let authorId = request.authorId else
         {
@@ -68,7 +68,7 @@ class AuthorPostDetailsInteractor: AuthorPostDetailsBusinessLogic, AuthorPostDet
         
         weak var weakself = self
         
-        worker.fetchPostDetails(url: Constants.baseURL, authorID: authorId) { (postList, error) in
+        worker.fetchPostDetails(url: Constants.baseURL, authorID: authorId, order: order) { (postList, error) in
             
             if let postList = postList
             {

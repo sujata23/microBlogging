@@ -23,13 +23,15 @@ class AuthorPostDetailsWorker : BaseWorkerClass
      parameter 2:- authorID : authorid to get post details of specific author
      
      */
-    func fetchPostDetails(url : String , authorID : String,completionHandler: @escaping (_: [Post]?, _: MBError?) -> Void)
+    func fetchPostDetails(url : String , authorID : String, order : SortOrder , completionHandler: @escaping (_: [Post]?, _: MBError?) -> Void)
     {
         var postFectchUrl = url
         postFectchUrl = postFectchUrl + Constants.postURLParameter
         
+        let orderQuery = fetchRequestQueryParameterFor(order: order)
+        
         if var urlComponents = URLComponents(string: postFectchUrl) {
-            urlComponents.query = "authorId=\(authorID)&_sort=date"
+            urlComponents.query = "authorId=\(authorID)&\(orderQuery)"
             
             guard let url = urlComponents.url else {
                 
@@ -89,6 +91,8 @@ class AuthorPostDetailsWorker : BaseWorkerClass
         }
         
     }
+    
+    
     
     
 }

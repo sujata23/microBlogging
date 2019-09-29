@@ -10,6 +10,8 @@
 //  see http://clean-swift.com
 //
 
+
+
 import UIKit
 
 protocol AuthorPostDetailsDisplayLogic: class
@@ -161,7 +163,9 @@ class AuthorPostDetailsViewController: UITableViewController, AuthorPostDetailsD
     func showPostList()
     {
         let request = AuthorPostDetails.FetchPostDetails.Request(authorId: displayedAuthor?.id)
-        interactor?.fetchPostDetails(request: request)
+        
+        // Assuming we are showing post list in ascending date order
+        interactor?.fetchPostDetails(request: request, order: .ascending)
     }
     
     
