@@ -12,9 +12,8 @@
 
 import UIKit
 
-class AuthorListWorker
+class AuthorListWorker : BaseWorkerClass
 {
-    let defaultSession = URLSession(configuration: .default)
     var dataTask: URLSessionDataTask?
     
     
@@ -40,7 +39,7 @@ class AuthorListWorker
                 return
             }
             dataTask =
-                defaultSession.dataTask(with: url) { [weak self] data, response, error in
+                BaseWorkerClass.sessionManager.dataTask(with: url) { [weak self] data, response, error in
                     defer {
                         self?.dataTask = nil
                     }
