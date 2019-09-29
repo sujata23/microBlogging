@@ -38,8 +38,7 @@ class AuthorListPresenter: AuthorListPresentationLogic
         {
             for author in authorList {
                 
-                let strAuthorId = String(author.id)
-                let displayedAuthor = AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(id: strAuthorId, name: author.name, userName: author.userName, email: author.email, avatarUrl: author.avatarUrl)
+                let displayedAuthor = AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(name: author.name, userName: author.userName, email: author.email, avatarUrl: author.avatarUrl)
                 displayedAuthors.append(displayedAuthor)
             }
             let viewModel = AuthorList.FetchAuthorList.ViewModel.init(authorList: displayedAuthors)

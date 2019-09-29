@@ -57,7 +57,6 @@ class AuthorPostDetailsPresenter: AuthorPostDetailsPresentationLogic
                 displayedPostList.append(displayedPost)
             }
             
-            displayedPostList = displayedPostList.reversed()
             let viewModel = AuthorPostDetails.FetchPostDetails.ViewModel.init(postList: displayedPostList)
             viewController?.displayPostDetails(viewModel: viewModel)
         }

@@ -96,7 +96,7 @@ class AuthorListViewControllerTests: XCTestCase {
         currentControllerUnderTest.tableView = tableViewSpy
         
         // When
-        let displayedAuthors = [AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(id: "1", name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")]
+        let displayedAuthors = [AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")]
         
         let viewModel = AuthorList.FetchAuthorList.ViewModel(authorList: displayedAuthors)
         currentControllerUnderTest.displayAuthorList(viewModel: viewModel)
@@ -109,7 +109,7 @@ class AuthorListViewControllerTests: XCTestCase {
     {
         // Given
         let tableView = currentControllerUnderTest.tableView
-        let testDisplayedAuthors = [AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(id: "1", name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")]
+        let testDisplayedAuthors = [AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")]
         currentControllerUnderTest.displayedAuthors = testDisplayedAuthors
         
         // When
@@ -124,7 +124,7 @@ class AuthorListViewControllerTests: XCTestCase {
     {
         // Given
         let tableView = currentControllerUnderTest.tableView
-        let testDisplayAuthor = [AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(id: "1", name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")]
+        let testDisplayAuthor = [AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")]
 
         currentControllerUnderTest.displayedAuthors = testDisplayAuthor
         

@@ -72,7 +72,6 @@ class AuthorPresenterTests: XCTestCase
     // Then
     let displayedAuthorList = authorListDisplayLogicSpy.viewModel.authorList
     for displayedAuthor in displayedAuthorList {
-      XCTAssertEqual(displayedAuthor.id, "1", "Presenting fetched authors should properly format author ID")
       XCTAssertEqual(displayedAuthor.name, "authorFirst", "Presenting fetched authors should properly format author name")
       XCTAssertEqual(displayedAuthor.email, "author.first@email.id", "Presenting fetched authors should properly format email")
       XCTAssertEqual(displayedAuthor.userName, "authorFirstUN", "Presenting fetched author should properly format username")

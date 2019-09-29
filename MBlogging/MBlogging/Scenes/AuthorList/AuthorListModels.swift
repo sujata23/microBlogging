@@ -33,7 +33,6 @@ enum AuthorList
     {
         struct DisplayAuthorList
         {
-            var id: String
             var name: String
             var userName: String
             var email: String
