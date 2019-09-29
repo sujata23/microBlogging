@@ -170,9 +170,9 @@ class AuthorPostDetailsViewController: UITableViewController, AuthorPostDetailsD
     func displayAuthorDetails(viewModel: AuthorPostDetails.FetchAuthorDetails.ViewModel)
     {
         displayedAuthor = viewModel.authorDetails
+        showPostList()
         self.title = displayedAuthor?.userName
         self.tableView.reloadData()
-        showPostList()
     }
     
     func displayPostDetails(viewModel: AuthorPostDetails.FetchPostDetails.ViewModel)
@@ -192,7 +192,7 @@ class AuthorPostDetailsViewController: UITableViewController, AuthorPostDetailsD
     
     //MARK: UITableView DataSource
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> PostDetailsCell {
         
         let displayedPost = displayedPostList[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: AuthorPostDetailsViewController.cellIdentifier) as! PostDetailsCell
@@ -201,7 +201,7 @@ class AuthorPostDetailsViewController: UITableViewController, AuthorPostDetailsD
         
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> CustomSectionHeader? {
         
         // Dequeue with the reuse identifier
         let header = self.tableView.dequeueReusableHeaderFooterView(withIdentifier:AuthorPostDetailsViewController.headerIdentifier) as! CustomSectionHeader

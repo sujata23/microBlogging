@@ -43,9 +43,11 @@ class AuthorPostDetailsViewControllerTests: XCTestCase {
     
     // MARK: - Test doubles
     
-    class PostDetailsBusinessLogicSpy: AuthorPostDetailsBusinessLogic
+    class PostDetailsBusinessLogicSpy: AuthorPostDetailsBusinessLogic , AuthorPostDetailsDataStore
     {
+        var author: Author!
         
+    
         // MARK: Method call expectations
         
         var fetchAuthorCalled = false
@@ -61,8 +63,8 @@ class AuthorPostDetailsViewControllerTests: XCTestCase {
             fetchPostCalled = true
         }
         
-        
     }
+    
     
     class TableViewSpy: UITableView
     {
@@ -94,65 +96,117 @@ class AuthorPostDetailsViewControllerTests: XCTestCase {
         XCTAssert(authorBusinessLogicSpy.fetchAuthorCalled, "Should fetch authors right after the view did loaded")
     }
     
-    func testShouldFetchAuthorsWhenViewDidAppear()
+    func testShouldFetchAuthorsWhenAuthorIsLoaded()
     {
         // Given
-        let authorBusinessLogicSpy = PostDetailsBusinessLogicSpy()
-        currentControllerUnderTest.interactor = authorBusinessLogicSpy
+        let authorsPostBusinessLogicSpy = PostDetailsBusinessLogicSpy()
+        currentControllerUnderTest.interactor = authorsPostBusinessLogicSpy
         loadView()
         
         // When
-        currentControllerUnderTest.viewWillAppear(true)
+        let displayedAuthor = AuthorPostDetails.FetchAuthorDetails.ViewModel.DisplayAuthor(id: "1", name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")
+        
+        let viewModel = AuthorPostDetails.FetchAuthorDetails.ViewModel(authorDetails: displayedAuthor)
+        currentControllerUnderTest.displayAuthorDetails(viewModel: viewModel)
         
         // Then
-        XCTAssert(authorBusinessLogicSpy.fetchPostCalled, "Should fetch post right after the view appears")
+        XCTAssert(authorsPostBusinessLogicSpy.fetchPostCalled, "Should fetch Posts for selected user")
     }
     
-//    func testShouldDisplayFetchedAuthors()
-//    {
-//        // Given
-//        let tableViewSpy = TableViewSpy()
-//        currentControllerUnderTest.tableView = tableViewSpy
-//
-//        // When
-//        let displayedOrders = [AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(id: "1", name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")]
-//
-//        let viewModel = AuthorList.FetchAuthorList.ViewModel(authorList: displayedOrders)
-//        currentControllerUnderTest.displayAuthorList(viewModel: viewModel)
-//
-//        // Then
-//        XCTAssert(tableViewSpy.reloadDataCalled, "Displaying fetched orders should reload the table view")
-//    }
-//
-//    func testNumberOfRowsInAnySectionShouldEqaulNumberOfOrdersToDisplay()
-//    {
-//        // Given
-//        let tableView = currentControllerUnderTest.tableView
-//        let testDisplayedOrders = [AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(id: "1", name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")]
-//        currentControllerUnderTest.displayedAuthors = testDisplayedOrders
-//
-//        // When
-//        let numberOfRows = currentControllerUnderTest.tableView(tableView!, numberOfRowsInSection: 0)
-//
-//        // Then
-//        XCTAssertEqual(numberOfRows, testDisplayedOrders.count, "The number of table view rows should equal the number of orders to display")
-//    }
-//
-//
-//    func testShouldConfigureTableViewCellToDisplayOrder()
-//    {
-//        // Given
-//        let tableView = currentControllerUnderTest.tableView
-//        let testDisplayAuthor = [AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(id: "1", name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")]
-//
-//        currentControllerUnderTest.displayedAuthors = testDisplayAuthor
-//
-//        // When
-//        let indexPath = IndexPath(row: 0, section: 0)
-//        let cell = currentControllerUnderTest.tableView(tableView!, cellForRowAt: indexPath)
-//
-//        // Then
-//        XCTAssertEqual(cell.authorName?.text, "TestAuthor1", "A properly configured table view cell should display the authors name")
-//        XCTAssertEqual(cell.authorEmailId?.text, "testauthor1@testemailid.com", "A properly configured table view cell should display the authors emailid")
-//    }
+    func testTableViewShouldReloadWhenAuthorDataIsFetched()
+    {
+        // Given
+        let tableViewSpy = TableViewSpy()
+        currentControllerUnderTest.tableView = tableViewSpy
+        
+        // When
+        let displayedAuthor = AuthorPostDetails.FetchAuthorDetails.ViewModel.DisplayAuthor(id: "1", name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")
+        
+        let viewModel = AuthorPostDetails.FetchAuthorDetails.ViewModel(authorDetails: displayedAuthor)
+        currentControllerUnderTest.displayAuthorDetails(viewModel: viewModel)
+        
+        // Then
+        XCTAssert(tableViewSpy.reloadDataCalled, "Displaying Author details on table header")
+    }
+    
+    func testShouldDisplayFetchedPost()
+    {
+        // Given
+        let tableViewSpy = TableViewSpy()
+        currentControllerUnderTest.tableView = tableViewSpy
+
+        // When
+        let displayedPost = [AuthorPostDetails.FetchPostDetails.ViewModel.DisplayedPost(title: "Test post title", date: Seeds.UtilityTest.stringDateInput, body: "Test body input")]
+
+        let viewModel = AuthorPostDetails.FetchPostDetails.ViewModel(postList: displayedPost)
+        currentControllerUnderTest.displayPostDetails(viewModel: viewModel)
+
+        // Then
+        XCTAssert(tableViewSpy.reloadDataCalled, "Displaying fetched Posts should reload the table view")
+    }
+
+    
+    func testNumberOfRowsInAnySectionShouldEqaulNumberOfOrdersToDisplay()
+    {
+        // Given
+        let authorsPostBusinessLogicSpy = PostDetailsBusinessLogicSpy()
+        currentControllerUnderTest.interactor = authorsPostBusinessLogicSpy
+        authorsPostBusinessLogicSpy.author = Seeds.Authors.firstAuthor
+        
+        let tableView = currentControllerUnderTest.tableView
+        let displayedPost = [AuthorPostDetails.FetchPostDetails.ViewModel.DisplayedPost(title: "Test post title", date: Seeds.UtilityTest.stringDateInput, body: "Test body input")]
+        currentControllerUnderTest.displayedPostList = displayedPost
+
+        // When
+        let numberOfRows = currentControllerUnderTest.tableView(tableView!, numberOfRowsInSection: 0)
+
+        // Then
+        XCTAssertEqual(numberOfRows, displayedPost.count, "The number of table view rows should equal the number of posts to display")
+    }
+    
+    
+    func testShouldConfigureTableViewHeaderToDisplayAuthorDetails()
+    {
+        // Given
+        let authorsPostBusinessLogicSpy = PostDetailsBusinessLogicSpy()
+        currentControllerUnderTest.interactor = authorsPostBusinessLogicSpy
+        authorsPostBusinessLogicSpy.author = Seeds.Authors.firstAuthor
+        
+        let tableView = currentControllerUnderTest.tableView
+        
+        
+        let displayedPost = [AuthorPostDetails.FetchPostDetails.ViewModel.DisplayedPost(title: "Test post title", date: Seeds.UtilityTest.modifiedDate, body: "Test body input")]
+        currentControllerUnderTest.displayedPostList = displayedPost
+        
+        // When
+        let indexPath = IndexPath(row: 0, section: 0)
+        let cell = currentControllerUnderTest.tableView(tableView!, cellForRowAt: indexPath)
+        
+        // Then
+        XCTAssertEqual(cell.title.text, "Test post title", "A properly configured table view cell should display the post title")
+        XCTAssertEqual(cell.date?.text, Seeds.UtilityTest.modifiedDate, "A properly configured table view cell should display the authors emailid")
+        XCTAssertEqual(cell.postBody?.text, "Test body input", "A properly configured table view cell should display the authors post body")
+        
+    }
+
+    func testShouldConfigureTableViewCellToDisplayPosts()
+    {
+        // Given
+        let authorsPostBusinessLogicSpy = PostDetailsBusinessLogicSpy()
+        currentControllerUnderTest.interactor = authorsPostBusinessLogicSpy
+        authorsPostBusinessLogicSpy.author = Seeds.Authors.firstAuthor
+        
+        let tableView = currentControllerUnderTest.tableView
+        
+        // When
+        let displayedAuthor = AuthorPostDetails.FetchAuthorDetails.ViewModel.DisplayAuthor(id: String(Seeds.Authors.firstAuthor.id), name: Seeds.Authors.firstAuthor.name, userName: Seeds.Authors.firstAuthor.userName, email: Seeds.Authors.firstAuthor.email, avatarUrl: Seeds.Authors.firstAuthor.avatarUrl)
+        let viewModel = AuthorPostDetails.FetchAuthorDetails.ViewModel(authorDetails: displayedAuthor)
+        currentControllerUnderTest.displayAuthorDetails(viewModel: viewModel)
+        let headerView = currentControllerUnderTest.tableView(tableView!, viewForHeaderInSection: 0)
+        
+        // Then
+        XCTAssertEqual(headerView?.authorName.text, "authorFirst", "A properly configured table view cell should display the post title")
+        XCTAssertEqual(headerView?.authorEmailId?.text, "author.first@email.id", "A properly configured table view cell should display the authors emailid")
+
+    }
 }

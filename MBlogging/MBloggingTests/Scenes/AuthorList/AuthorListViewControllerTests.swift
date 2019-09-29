@@ -116,7 +116,7 @@ class AuthorListViewControllerTests: XCTestCase {
         let numberOfRows = currentControllerUnderTest.tableView(tableView!, numberOfRowsInSection: 0)
         
         // Then
-        XCTAssertEqual(numberOfRows, testDisplayedOrders.count, "The number of table view rows should equal the number of orders to display")
+        XCTAssertEqual(numberOfRows, testDisplayedOrders.count, "The number of table view rows should equal the number of authors to display")
     }
     
     
