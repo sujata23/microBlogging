@@ -29,9 +29,9 @@ struct Seeds
     
     struct UtilityTest
     {
-        static let stringDateInput = "2017-09-21T18:52:15.696Z"
+        static let stringDateInput = "2017-12-05T18:52:15.696Z"
         static let date = "stringwithBlankAtStartAndBack"
-        static let modifiedDate = "Sep 21, 2017"
+        static let modifiedDate = "Dec 5, 2017"
         
     }
 }

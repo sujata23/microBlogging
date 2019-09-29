@@ -14,18 +14,18 @@ import UIKit
 
 @objc protocol AuthorPostDetailsRoutingLogic
 {
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
+    //func routeToSomewhere(segue: UIStoryboardSegue?)
 }
 
 protocol AuthorPostDetailsDataPassing
 {
-  var dataStore: AuthorPostDetailsDataStore? { get }
+    var dataStore: AuthorPostDetailsDataStore? { get }
 }
 
 class AuthorPostDetailsRouter: NSObject, AuthorPostDetailsRoutingLogic, AuthorPostDetailsDataPassing
 {
-  weak var viewController: AuthorPostDetailsViewController?
-  var dataStore: AuthorPostDetailsDataStore?
-  
-
+    weak var viewController: AuthorPostDetailsViewController?
+    var dataStore: AuthorPostDetailsDataStore?
+    
+    
 }

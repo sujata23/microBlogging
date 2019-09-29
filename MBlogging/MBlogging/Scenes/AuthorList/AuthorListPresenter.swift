@@ -15,8 +15,8 @@ import UIKit
 protocol AuthorListPresentationLogic
 {
     /**
-      Call back from the Interactor with the response it received from the Server
-    */
+     Call back from the Interactor with the response it received from the Server
+     */
     func presentAuthorList(response: AuthorList.FetchAuthorList.Response)
     
 }
@@ -28,7 +28,7 @@ class AuthorListPresenter: AuthorListPresentationLogic
     weak var viewController: AuthorListDisplayLogic?
     var displayedAuthors: [AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList] = []
     
-   
+    
     
     //MARK : AuthorListPresentationLogic functions
     func presentAuthorList(response: AuthorList.FetchAuthorList.Response)
@@ -56,7 +56,7 @@ class AuthorListPresenter: AuthorListPresentationLogic
             let mbError = MBError.init(mbErrorCode: MBErrorCode.ServerError)
             mbError.mbErrorDebugInfo = "Generic error while fetching Authors list"
             viewController?.errorReceivedInAuthorFetchRequest(error: mbError)
-
+            
         }
     }
 }

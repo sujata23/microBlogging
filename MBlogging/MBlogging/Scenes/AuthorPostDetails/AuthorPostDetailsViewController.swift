@@ -34,13 +34,13 @@ protocol AuthorPostDetailsDisplayLogic: class
      */
     
     func errorReceivedInAuthorFetchRequest(error : MBError)
-
+    
     
 }
 
 class AuthorPostDetailsViewController: UITableViewController, AuthorPostDetailsDisplayLogic
 {
-
+    
     //Constant
     
     static let cellIdentifier =  "PostDetailsCell"
@@ -228,5 +228,5 @@ class AuthorPostDetailsViewController: UITableViewController, AuthorPostDetailsD
         return displayedPostList.count
     }
     
-
+    
 }

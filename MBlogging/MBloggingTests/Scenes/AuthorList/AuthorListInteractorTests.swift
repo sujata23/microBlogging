@@ -65,7 +65,7 @@ class AuthorListInteractorTests: XCTestCase
   
   // MARK: - Tests
     
-    func testFetchOrdersShouldAskOrdersWorkerToFetchOrdersAndPresenterToFormatResult()
+    func testFetchAuthorsShouldAskAuthorWorkerToFetchAuthorAndPresenterToFormatResult()
     {
         // Given
         let authorPresentationLogicSpy = AuthorListPresentationLogicSpy()

@@ -19,7 +19,7 @@ class AuthorPostDetailsViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         window = UIWindow()
-        setupListOrdersViewController()
+        setupListAuthorsViewController()
         
     }
     
@@ -28,7 +28,7 @@ class AuthorPostDetailsViewControllerTests: XCTestCase {
         super.tearDown()
     }
     
-    func setupListOrdersViewController()
+    func setupListAuthorsViewController()
     {
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
@@ -146,7 +146,7 @@ class AuthorPostDetailsViewControllerTests: XCTestCase {
     }
 
     
-    func testNumberOfRowsInAnySectionShouldEqaulNumberOfOrdersToDisplay()
+    func testNumberOfRowsInAnySectionShouldEqaulNumberOfAuthorsToDisplay()
     {
         // Given
         let authorsPostBusinessLogicSpy = PostDetailsBusinessLogicSpy()

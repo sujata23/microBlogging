@@ -81,8 +81,8 @@ class AuthorPostDetailsPresenter: AuthorPostDetailsPresentationLogic
     //MARK: Data modification function
     
     /**
-        Modify date to show in post viewmodel
-    */
+     Modify date to show in post viewmodel
+     */
     
     func dateModificationForPost(sourceDate : String?) -> String
     {

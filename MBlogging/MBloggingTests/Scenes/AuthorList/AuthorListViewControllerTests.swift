@@ -19,7 +19,7 @@ class AuthorListViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         window = UIWindow()
-        setupListOrdersViewController()
+        setupListAuthorViewController()
         
     }
     
@@ -28,7 +28,7 @@ class AuthorListViewControllerTests: XCTestCase {
         super.tearDown()
     }
     
-    func setupListOrdersViewController()
+    func setupListAuthorViewController()
     {
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
@@ -96,31 +96,31 @@ class AuthorListViewControllerTests: XCTestCase {
         currentControllerUnderTest.tableView = tableViewSpy
         
         // When
-        let displayedOrders = [AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(id: "1", name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")]
+        let displayedAuthors = [AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(id: "1", name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")]
         
-        let viewModel = AuthorList.FetchAuthorList.ViewModel(authorList: displayedOrders)
+        let viewModel = AuthorList.FetchAuthorList.ViewModel(authorList: displayedAuthors)
         currentControllerUnderTest.displayAuthorList(viewModel: viewModel)
         
         // Then
-        XCTAssert(tableViewSpy.reloadDataCalled, "Displaying fetched orders should reload the table view")
+        XCTAssert(tableViewSpy.reloadDataCalled, "Displaying fetched Authors should reload the table view")
     }
     
-    func testNumberOfRowsInAnySectionShouldEqaulNumberOfOrdersToDisplay()
+    func testNumberOfRowsInAnySectionShouldEqaulNumberOfAuthorsToDisplay()
     {
         // Given
         let tableView = currentControllerUnderTest.tableView
-        let testDisplayedOrders = [AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(id: "1", name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")]
-        currentControllerUnderTest.displayedAuthors = testDisplayedOrders
+        let testDisplayedAuthors = [AuthorList.FetchAuthorList.ViewModel.DisplayAuthorList(id: "1", name: "TestAuthor1", userName: "TestAuthor1UN", email: "testauthor1@testemailid.com", avatarUrl: "testURL")]
+        currentControllerUnderTest.displayedAuthors = testDisplayedAuthors
         
         // When
         let numberOfRows = currentControllerUnderTest.tableView(tableView!, numberOfRowsInSection: 0)
         
         // Then
-        XCTAssertEqual(numberOfRows, testDisplayedOrders.count, "The number of table view rows should equal the number of authors to display")
+        XCTAssertEqual(numberOfRows, testDisplayedAuthors.count, "The number of table view rows should equal the number of authors to display")
     }
     
     
-    func testShouldConfigureTableViewCellToDisplayOrder()
+    func testShouldConfigureTableViewCellToDisplayAuthor()
     {
         // Given
         let tableView = currentControllerUnderTest.tableView

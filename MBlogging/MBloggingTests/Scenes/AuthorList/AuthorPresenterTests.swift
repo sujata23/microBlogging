@@ -36,7 +36,8 @@ class AuthorPresenterTests: XCTestCase
     // MARK: Method call expectations
     
     var displayFetchedAuthorsCalled = false
-    
+    var errorCallBackWhileFetchingAuthorList = false
+
     // MARK: Argument expectations
     
     var viewModel: AuthorList.FetchAuthorList.ViewModel!
@@ -50,7 +51,7 @@ class AuthorPresenterTests: XCTestCase
     }
     
     func errorReceivedInAuthorFetchRequest(error: MBError) {
-        displayFetchedAuthorsCalled = true
+        errorCallBackWhileFetchingAuthorList = true
     }
   }
   
@@ -71,15 +72,15 @@ class AuthorPresenterTests: XCTestCase
     // Then
     let displayedAuthorList = authorListDisplayLogicSpy.viewModel.authorList
     for displayedAuthor in displayedAuthorList {
-      XCTAssertEqual(displayedAuthor.id, "1", "Presenting fetched orders should properly format author ID")
-      XCTAssertEqual(displayedAuthor.name, "authorFirst", "Presenting fetched orders should properly format author name")
+      XCTAssertEqual(displayedAuthor.id, "1", "Presenting fetched authors should properly format author ID")
+      XCTAssertEqual(displayedAuthor.name, "authorFirst", "Presenting fetched authors should properly format author name")
       XCTAssertEqual(displayedAuthor.email, "author.first@email.id", "Presenting fetched authors should properly format email")
       XCTAssertEqual(displayedAuthor.userName, "authorFirstUN", "Presenting fetched author should properly format username")
       XCTAssertEqual(displayedAuthor.avatarUrl, "firstuserURL", "Presenting fetched author should properly format url")
     }
   }
 
-  func testPresentFetchedAuthorsShouldAskViewControllerToDisplayFetchedOrders()
+  func testPresentFetchedAuthorsShouldAskViewControllerToDisplayFetchedAuthor()
   {
     // Given
     let authorListDisplayLogicSpy = AuthorListDisplayLogicSpy()
@@ -93,4 +94,20 @@ class AuthorPresenterTests: XCTestCase
     // Then
     XCTAssert(authorListDisplayLogicSpy.displayFetchedAuthorsCalled, "Presenting fetched authors should ask view controller to display them")
   }
+    
+    func testPresentFaultyFetchedAuthorlistShouldAskViewControllerToDisplayError()
+    {
+        // Given
+        let authorListDisplayLogicSpy = AuthorListDisplayLogicSpy()
+        presenterUnderTest.viewController = authorListDisplayLogicSpy
+        
+        // When
+        let testError = MBError.init(mbErrorCode: .GeneralError)
+
+        let response = AuthorList.FetchAuthorList.Response(authors: nil, error: testError)
+        presenterUnderTest.presentAuthorList(response: response)
+        
+        // Then
+        XCTAssert(authorListDisplayLogicSpy.errorCallBackWhileFetchingAuthorList, "Presenting error while fetching authors should ask view controller to display them")
+    }
 }
