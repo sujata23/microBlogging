@@ -31,13 +31,15 @@ protocol AuthorPostDetailsBusinessLogic
 protocol AuthorPostDetailsDataStore
 {
     var author: Author! { get set }
-    
+    var postList: [Post]? { get set }
+
 }
 
 class AuthorPostDetailsInteractor: AuthorPostDetailsBusinessLogic, AuthorPostDetailsDataStore
 {
+    var postList: [Post]?
+    
     var author: Author!
-    var postForSpecificAuthor : [Post]?
     
     var presenter: AuthorPostDetailsPresentationLogic?
     var worker: AuthorPostDetailsWorker = AuthorPostDetailsWorker()
@@ -73,7 +75,7 @@ class AuthorPostDetailsInteractor: AuthorPostDetailsBusinessLogic, AuthorPostDet
             if let postList = postList
             {
                 
-                weakself?.postForSpecificAuthor = postList
+                weakself?.postList = postList
                 
                 let response = AuthorPostDetails.FetchPostDetails.Response(postList: postList, error: nil)
                 weakself?.presenter?.presentPostList(response: response)

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F01300D2233E9DA000F18731 /* AuthorPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01300D1233E9DA000F18731 /* AuthorPresenterTests.swift */; };
+		F028FA322341E1D700818FCD /* BasePresenterClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F028FA312341E1D700818FCD /* BasePresenterClass.swift */; };
+		F028FA342341E27200818FCD /* CommentSectionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F028FA332341E27200818FCD /* CommentSectionRouter.swift */; };
 		F02BC1A8233FA91C00E96C33 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02BC1A7233FA91C00E96C33 /* Post.swift */; };
 		F02BC1AB233FAFBA00E96C33 /* PostDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02BC1A9233FAFBA00E96C33 /* PostDetailsCell.swift */; };
 		F02BC1AC233FAFBA00E96C33 /* PostDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02BC1AA233FAFBA00E96C33 /* PostDetailsCell.xib */; };
@@ -40,13 +42,14 @@
 		F040DFCE2340AACA001963AF /* AuthorPostDetailsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFCD2340AACA001963AF /* AuthorPostDetailsPresenterTests.swift */; };
 		F040DFDF23411E5D001963AF /* CommentSectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFD923411E5D001963AF /* CommentSectionPresenter.swift */; };
 		F040DFE023411E5D001963AF /* CommentSectionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFDA23411E5D001963AF /* CommentSectionWorker.swift */; };
-		F040DFE123411E5D001963AF /* CommentSectionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFDB23411E5D001963AF /* CommentSectionRouter.swift */; };
 		F040DFE223411E5D001963AF /* CommentSectionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFDC23411E5D001963AF /* CommentSectionModels.swift */; };
 		F040DFE323411E5D001963AF /* CommentSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFDD23411E5D001963AF /* CommentSectionViewController.swift */; };
 		F040DFE423411E5D001963AF /* CommentSectionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFDE23411E5D001963AF /* CommentSectionInteractor.swift */; };
 		F040DFE6234120B9001963AF /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFE5234120B9001963AF /* Comment.swift */; };
 		F040DFE92341243B001963AF /* BaseWorkerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFE82341243B001963AF /* BaseWorkerClass.swift */; };
 		F040DFEC234132A5001963AF /* BaseWorkerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFEB234132A5001963AF /* BaseWorkerTest.swift */; };
+		F040DFEF23415631001963AF /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F040DFED23415630001963AF /* CommentCell.swift */; };
+		F040DFF023415631001963AF /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F040DFEE23415630001963AF /* CommentCell.xib */; };
 		F05874FC233D353300F0E5D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05874FB233D353300F0E5D1 /* AppDelegate.swift */; };
 		F0587501233D353300F0E5D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F05874FF233D353300F0E5D1 /* Main.storyboard */; };
 		F0587503233D353400F0E5D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0587502233D353400F0E5D1 /* Assets.xcassets */; };
@@ -74,6 +77,8 @@
 
 /* Begin PBXFileReference section */
 		F01300D1233E9DA000F18731 /* AuthorPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorPresenterTests.swift; sourceTree = "<group>"; };
+		F028FA312341E1D700818FCD /* BasePresenterClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasePresenterClass.swift; sourceTree = "<group>"; };
+		F028FA332341E27200818FCD /* CommentSectionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSectionRouter.swift; sourceTree = "<group>"; };
 		F02BC1A7233FA91C00E96C33 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		F02BC1A9233FAFBA00E96C33 /* PostDetailsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsCell.swift; sourceTree = "<group>"; };
 		F02BC1AA233FAFBA00E96C33 /* PostDetailsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostDetailsCell.xib; sourceTree = "<group>"; };
@@ -106,13 +111,14 @@
 		F040DFCD2340AACA001963AF /* AuthorPostDetailsPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorPostDetailsPresenterTests.swift; sourceTree = "<group>"; };
 		F040DFD923411E5D001963AF /* CommentSectionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSectionPresenter.swift; sourceTree = "<group>"; };
 		F040DFDA23411E5D001963AF /* CommentSectionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSectionWorker.swift; sourceTree = "<group>"; };
-		F040DFDB23411E5D001963AF /* CommentSectionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSectionRouter.swift; sourceTree = "<group>"; };
 		F040DFDC23411E5D001963AF /* CommentSectionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSectionModels.swift; sourceTree = "<group>"; };
 		F040DFDD23411E5D001963AF /* CommentSectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSectionViewController.swift; sourceTree = "<group>"; };
 		F040DFDE23411E5D001963AF /* CommentSectionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSectionInteractor.swift; sourceTree = "<group>"; };
 		F040DFE5234120B9001963AF /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		F040DFE82341243B001963AF /* BaseWorkerClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWorkerClass.swift; sourceTree = "<group>"; };
 		F040DFEB234132A5001963AF /* BaseWorkerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWorkerTest.swift; sourceTree = "<group>"; };
+		F040DFED23415630001963AF /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		F040DFEE23415630001963AF /* CommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentCell.xib; sourceTree = "<group>"; };
 		F05874F8233D353300F0E5D1 /* MBlogging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MBlogging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F05874FB233D353300F0E5D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0587500233D353300F0E5D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -150,6 +156,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F028FA302341E1BE00818FCD /* BasePresenter */ = {
+			isa = PBXGroup;
+			children = (
+				F028FA312341E1D700818FCD /* BasePresenterClass.swift */,
+			);
+			path = BasePresenter;
+			sourceTree = "<group>";
+		};
 		F02BC1B1233FE7A600E96C33 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +195,8 @@
 		F02EB932233F69D400A18AA1 /* CustomCell */ = {
 			isa = PBXGroup;
 			children = (
+				F040DFED23415630001963AF /* CommentCell.swift */,
+				F040DFEE23415630001963AF /* CommentCell.xib */,
 				F02BC1A9233FAFBA00E96C33 /* PostDetailsCell.swift */,
 				F02BC1AA233FAFBA00E96C33 /* PostDetailsCell.xib */,
 				F02EB933233F69D400A18AA1 /* AuthorListCell.swift */,
@@ -192,6 +208,7 @@
 		F02EB939233F69DF00A18AA1 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				F028FA302341E1BE00818FCD /* BasePresenter */,
 				F040DFE723412405001963AF /* BaseWorker */,
 				F040DFD823411D5C001963AF /* CommentSection */,
 				F02EB93A233F69DF00A18AA1 /* AuthorList */,
@@ -248,10 +265,10 @@
 			children = (
 				F040DFD923411E5D001963AF /* CommentSectionPresenter.swift */,
 				F040DFDA23411E5D001963AF /* CommentSectionWorker.swift */,
-				F040DFDB23411E5D001963AF /* CommentSectionRouter.swift */,
 				F040DFDC23411E5D001963AF /* CommentSectionModels.swift */,
 				F040DFDD23411E5D001963AF /* CommentSectionViewController.swift */,
 				F040DFDE23411E5D001963AF /* CommentSectionInteractor.swift */,
+				F028FA332341E27200818FCD /* CommentSectionRouter.swift */,
 			);
 			path = CommentSection;
 			sourceTree = "<group>";
@@ -460,6 +477,7 @@
 				F0587503233D353400F0E5D1 /* Assets.xcassets in Resources */,
 				F02BC1AC233FAFBA00E96C33 /* PostDetailsCell.xib in Resources */,
 				F0587501233D353300F0E5D1 /* Main.storyboard in Resources */,
+				F040DFF023415631001963AF /* CommentCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +503,7 @@
 				F02EB95E233F6A8D00A18AA1 /* CustomImageView.swift in Sources */,
 				F02BC1AB233FAFBA00E96C33 /* PostDetailsCell.swift in Sources */,
 				F02EB949233F69DF00A18AA1 /* AuthorListWorker.swift in Sources */,
+				F040DFEF23415631001963AF /* CommentCell.swift in Sources */,
 				F02EB95B233F6A8400A18AA1 /* NetworkManager.swift in Sources */,
 				F02EB94B233F69DF00A18AA1 /* AuthorListViewController.swift in Sources */,
 				F040DFE6234120B9001963AF /* Comment.swift in Sources */,
@@ -495,10 +514,10 @@
 				F02EB937233F69D400A18AA1 /* AuthorListCell.swift in Sources */,
 				F02EB965233F6B8F00A18AA1 /* AuthorPostDetailsPresenter.swift in Sources */,
 				F02BC1AE233FC30500E96C33 /* UtilityClass.swift in Sources */,
-				F040DFE123411E5D001963AF /* CommentSectionRouter.swift in Sources */,
 				F040DFE423411E5D001963AF /* CommentSectionInteractor.swift in Sources */,
 				F02BC1B0233FC84A00E96C33 /* String+Shortcut.swift in Sources */,
 				F02EB969233F6B8F00A18AA1 /* AuthorPostDetailsInteractor.swift in Sources */,
+				F028FA342341E27200818FCD /* CommentSectionRouter.swift in Sources */,
 				F02EB935233F69D400A18AA1 /* CustomSectionHeader.swift in Sources */,
 				F02EB95A233F6A8400A18AA1 /* TempInMemoryCache.swift in Sources */,
 				F02EB959233F6A8400A18AA1 /* ImageDownloader.swift in Sources */,
@@ -509,6 +528,7 @@
 				F040DFDF23411E5D001963AF /* CommentSectionPresenter.swift in Sources */,
 				F02EB96D233F754300A18AA1 /* BaseTableViewController.swift in Sources */,
 				F02EB95C233F6A8400A18AA1 /* Reachability.swift in Sources */,
+				F028FA322341E1D700818FCD /* BasePresenterClass.swift in Sources */,
 				F058752E233D75F700F0E5D1 /* Constants.swift in Sources */,
 				F02EB94C233F69DF00A18AA1 /* AuthorListPresenter.swift in Sources */,
 				F02EB94D233F69DF00A18AA1 /* AuthorListInteractor.swift in Sources */,

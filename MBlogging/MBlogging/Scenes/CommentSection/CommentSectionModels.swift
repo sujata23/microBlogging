@@ -14,18 +14,53 @@ import UIKit
 
 enum CommentSection
 {
-  // MARK: Use cases
-  
-  enum Something
-  {
-    struct Request
+    // MARK: Use cases
+    
+    enum FetchCommentList
     {
+        struct Request
+        {
+            var postId: String?
+        }
+        struct Response
+        {
+            var commentList: [Comment]?
+            var error:    MBError?
+        }
+        struct ViewModel
+        {
+            
+            struct DisplayedComment
+            {
+                var userName: String
+                var date:  String
+                var body:  String
+                var avatarUrl : String
+            }
+            
+            var commentList: [DisplayedComment]
+            
+            
+        }
     }
-    struct Response
+    
+    enum FetchReferencePost
     {
+        struct Request
+        {
+        }
+        struct Response
+        {
+            var post : Post
+        }
+        struct ViewModel
+        {
+            struct DisplayPost
+            {
+                var id:        String
+            }
+            var postInfo : DisplayPost
+            
+        }
     }
-    struct ViewModel
-    {
-    }
-  }
 }

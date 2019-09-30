@@ -107,16 +107,14 @@ class AuthorPostDetailsViewController: UITableViewController, AuthorPostDetailsD
     
     // MARK: Routing to different Controller
     
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    func navigateToCommentList()
     {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
+        if let router = router {
+            router.routeToCommentListPage()
         }
+        
     }
+
     
     
     //MARK: Set up View
@@ -231,6 +229,15 @@ class AuthorPostDetailsViewController: UITableViewController, AuthorPostDetailsD
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayedPostList.count
     }
+    
+    
+    //MARK: UITableView delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        navigateToCommentList()
+    }
+
     
     
 }

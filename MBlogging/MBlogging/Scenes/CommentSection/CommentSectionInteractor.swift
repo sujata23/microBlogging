@@ -14,28 +14,57 @@ import UIKit
 
 protocol CommentSectionBusinessLogic
 {
-  func doSomething(request: CommentSection.Something.Request)
+    func getReferencePost(request: CommentSection.FetchReferencePost.Request)
+
+    func fetchCommentDetails(request: CommentSection.FetchCommentList.Request , order : SortOrder , pageNumber : Int)
 }
 
 protocol CommentSectionDataStore
 {
-  //var name: String { get set }
+    var referencePost: Post! { get set }
+    
 }
 
 class CommentSectionInteractor: CommentSectionBusinessLogic, CommentSectionDataStore
 {
-  var presenter: CommentSectionPresentationLogic?
-  var worker: CommentSectionWorker?
-  //var name: String = ""
-  
-  // MARK: Do something
-  
-  func doSomething(request: CommentSection.Something.Request)
-  {
-    worker = CommentSectionWorker()
-    //worker?.doSomeWork()
+    var referencePost: Post!
     
-    let response = CommentSection.Something.Response()
-    presenter?.presentSomething(response: response)
-  }
+    var presenter: CommentSectionPresentationLogic?
+    var worker: CommentSectionWorker? = CommentSectionWorker()
+    //var name: String = ""
+    
+    // MARK: Responsibility of Interactor
+    
+    
+    func getReferencePost(request: CommentSection.FetchReferencePost.Request)
+    {
+        let response = CommentSection.FetchReferencePost.Response.init(post: referencePost)
+        presenter?.presentPost(response: response)
+    }
+    
+    func fetchCommentDetails(request: CommentSection.FetchCommentList.Request , order : SortOrder , pageNumber : Int)
+    {
+        
+        guard let postId = request.postId else
+        {
+            let mbError = MBError.init(mbErrorCode: MBErrorCode.GeneralError)
+            mbError.mbErrorDebugInfo = "Author id is missing for fetching posts"
+            
+            let response = CommentSection.FetchCommentList.Response(commentList: nil, error: mbError)
+            presenter?.presentCommentList(response: response)
+            
+            return
+        }
+        
+        
+        weak var weakSelf = self
+        
+        worker?.fetchComments(url: Constants.baseURL, pageNumber: pageNumber, postId: postId, sortOrder: order, completionHandler: { (commentList, error) in
+            
+            let response = CommentSection.FetchCommentList.Response(commentList: commentList, error: nil)
+            weakSelf?.presenter?.presentCommentList(response: response)
+        })
+        
+        
+    }
 }

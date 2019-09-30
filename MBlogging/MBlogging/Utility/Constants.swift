@@ -24,6 +24,7 @@ class Constants
     static let baseURL =  "https://sym-json-server.herokuapp.com/"
     static let authorURLParameter =  "authors"
     static let postURLParameter =  "posts"
+    static let commentsURLParameter =  "comments"
 
     
     

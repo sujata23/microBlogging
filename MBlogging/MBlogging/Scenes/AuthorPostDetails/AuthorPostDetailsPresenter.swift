@@ -27,7 +27,7 @@ protocol AuthorPostDetailsPresentationLogic
     func presentPostList(response: AuthorPostDetails.FetchPostDetails.Response)
 }
 
-class AuthorPostDetailsPresenter: AuthorPostDetailsPresentationLogic
+class AuthorPostDetailsPresenter: BasePresenterClass, AuthorPostDetailsPresentationLogic
 {
     weak var viewController: AuthorPostDetailsDisplayLogic?
     var displayedPostList: [AuthorPostDetails.FetchPostDetails.ViewModel.DisplayedPost] = []
@@ -74,39 +74,6 @@ class AuthorPostDetailsPresenter: AuthorPostDetailsPresentationLogic
             
         }
         
-    }
-    
-    
-    //MARK: Data modification function
-    
-    /**
-     Modify date to show in post viewmodel
-     */
-    
-    func dateModificationForPost(sourceDate : String?) -> String
-    {
-        guard let sourceDate = sourceDate else {
-            return ""
-        }
-        
-        guard sourceDate.trim().count != 0 else {
-            return ""
-        }
-        
-        let initialDate = UtilityClass.stringToDateFormat(dateInString: sourceDate)
-        
-        var dateInString = ""
-        
-        if let initialDate = initialDate
-        {
-            dateInString = UtilityClass.dateToStringFormat(date: initialDate)
-        }
-        else
-        {
-            dateInString = ""
-        }
-        
-        return dateInString 
     }
     
     

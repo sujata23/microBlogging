@@ -14,76 +14,183 @@ import UIKit
 
 protocol CommentSectionDisplayLogic: class
 {
-  func displaySomething(viewModel: CommentSection.Something.ViewModel)
+    /**
+     callback from presenter to get post id details
+     We show the data from ViewModel
+     */
+    
+    func displayReferencePost(viewModel: CommentSection.FetchReferencePost.ViewModel)
+    
+    /**
+     callback from presenter to show post list posted by the author mentioned in Header View
+     We show the data from ViewModel
+     */
+    
+    func displayCommentList(viewModel: CommentSection.FetchCommentList.ViewModel)
+    
+    /**
+     callback from presenter about error it received while fetching post list
+     In this function we can show the error to user , if required
+     */
+    
+    func errorReceivedInCommentFetchRequest(error : MBError)
 }
 
-class CommentSectionViewController: UIViewController, CommentSectionDisplayLogic
+class CommentSectionViewController: BaseTableViewController, CommentSectionDisplayLogic
 {
-  var interactor: CommentSectionBusinessLogic?
-  var router: (NSObjectProtocol & CommentSectionRoutingLogic & CommentSectionDataPassing)?
-
-  // MARK: Object lifecycle
-  
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
-  {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    setup()
-  }
-  
-  required init?(coder aDecoder: NSCoder)
-  {
-    super.init(coder: aDecoder)
-    setup()
-  }
-  
-  // MARK: Setup
-  
-  private func setup()
-  {
-    let viewController = self
-    let interactor = CommentSectionInteractor()
-    let presenter = CommentSectionPresenter()
-    let router = CommentSectionRouter()
-    viewController.interactor = interactor
-    viewController.router = router
-    interactor.presenter = presenter
-    presenter.viewController = viewController
-    router.viewController = viewController
-    router.dataStore = interactor
-  }
-  
-  // MARK: Routing
-  
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-  {
-    if let scene = segue.identifier {
-      let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-      if let router = router, router.responds(to: selector) {
-        router.perform(selector, with: segue)
-      }
+    
+    //Constant
+    
+    static let cellIdentifier =  "CommentCell"
+    
+    var interactor: CommentSectionBusinessLogic?
+    var router: (NSObjectProtocol & CommentSectionRoutingLogic & CommentSectionDataPassing)?
+    
+    var displayedComments : [CommentSection.FetchCommentList.ViewModel.DisplayedComment] = []
+    
+    
+    // MARK: Object lifecycle
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
+    {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
     }
-  }
-  
-  // MARK: View lifecycle
-  
-  override func viewDidLoad()
-  {
-    super.viewDidLoad()
-    doSomething()
-  }
-  
-  // MARK: Do something
-  
-  //@IBOutlet weak var nameTextField: UITextField!
-  
-  func doSomething()
-  {
-    let request = CommentSection.Something.Request()
-    interactor?.doSomething(request: request)
-  }
-  
-  func displaySomething(viewModel: CommentSection.Something.ViewModel)
-  {
-    //nameTextField.text = viewModel.name
-  }
+    
+    required init?(coder aDecoder: NSCoder)
+    {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+   
+    // MARK: Setup
+    
+    
+    /**
+     Call this function to set up items to maintain clean architecture.
+     */
+    
+    private func setup()
+    {
+        let viewController = self
+        let interactor = CommentSectionInteractor()
+        let presenter = CommentSectionPresenter()
+        let router = CommentSectionRouter()
+        viewController.interactor = interactor
+        viewController.router = router
+        interactor.presenter = presenter
+        presenter.viewController = viewController
+        router.viewController = viewController
+        router.dataStore = interactor
+    }
+    
+    
+    
+    
+    
+    // MARK: View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        setUpView()
+        fetchPostForDetailing()
+    }
+    
+    
+    //MARK: Set up View
+    
+    /**
+     Use this function to create or configure views you want to show in comment list page
+     */
+    
+    func setUpView()
+    {
+        title = "Comments"
+        self.isPaginationRequired = true
+        registerTableViewCell()
+        
+        //Configure tableview setting
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 400
+    }
+    
+    
+    func registerTableViewCell()
+    {
+        let authorListCell = UINib(nibName: "CommentCell", bundle: nil)
+        self.tableView.register(authorListCell, forCellReuseIdentifier: CommentSectionViewController.cellIdentifier)
+    }
+    
+    //MARK: Data Fetch functions
+    
+    /**
+     Call this get Post Details
+     */
+    
+    func fetchPostForDetailing()
+    {
+        let request = CommentSection.FetchReferencePost.Request()
+        interactor?.getReferencePost(request: request)
+    }
+    
+    
+    /**
+     Call this get comment Details
+     parameter 1:- postId -> String -> will be used to fetch comment specific to that postId
+     */
+    
+    func fetchCommentFor(postId : String)
+    {
+        let request = CommentSection.FetchCommentList.Request(postId: postId)
+        interactor?.fetchCommentDetails(request: request, order: .ascending, pageNumber: 1)
+    }
+    
+    
+    
+    //MARK: CommentSectionDisplayLogic functions
+    
+    func displayReferencePost(viewModel: CommentSection.FetchReferencePost.ViewModel) {
+        
+        let postId = viewModel.postInfo.id
+        fetchCommentFor(postId: postId)
+    }
+    
+    func displayCommentList(viewModel: CommentSection.FetchCommentList.ViewModel) {
+        
+        displayedComments = viewModel.commentList
+        tableView.reloadData()
+    }
+    
+    
+    func errorReceivedInCommentFetchRequest(error : MBError)
+    {
+        
+    }
+    
+    
+    
+    
+    // MARK: - Table view data source
+    
+    override func numberOfSections(in tableView: UITableView) -> Int
+    {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return displayedComments.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> CommentCell
+    {
+        let displayedComment = displayedComments[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: CommentSectionViewController.cellIdentifier) as! CommentCell
+        cell.initWith(comment: displayedComment)
+        return cell
+    }
+    
+    
 }

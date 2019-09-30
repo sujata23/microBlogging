@@ -12,35 +12,29 @@
 
 import UIKit
 
-class CommentSectionWorker
+class CommentSectionWorker : BaseWorkerClass
 {
-    let defaultSession = URLSession(configuration: .default)
     var dataTask: URLSessionDataTask?
     
     
     /**
-     Below request to fetch author list from Server
+     Below request to fetch comment list from Server
      parameter 1:- base url : to fetch author list
-     parameter 2:- authorID : authorid to get post details of specific author
+     parameter 2:- authorID : pageNumber to to help pagination
+     parameter 3:- authorID : authorid to get post details of specific author
+     parameter 4:- sortOrder :Response will be sorted according to the SortOrder,currently Assumed it is ascending
+     
      
      */
-    func fetchComments(url : String , postId : String,completionHandler: @escaping (_: [Comment]?, _: MBError?) -> Void)
+    func fetchComments(url : String , pageNumber : Int? , postId : String, sortOrder : SortOrder ,completionHandler: @escaping (_: [Comment]?, _: MBError?) -> Void)
     {
-        var postFectchUrl = url
-        postFectchUrl = postFectchUrl + Constants.postURLParameter
         
-        if var urlComponents = URLComponents(string: postFectchUrl) {
-            urlComponents.query = "authorId=\(postId)&_sort=date"
+        let urlToRequest = createURLStringWith(baseUrl: url, sortOrder: sortOrder, requestForEntity: Constants.commentsURLParameter, queryString: "postId=\(postId)", pageIndexToBeFetched: pageNumber)
+        
+        if let urlToRequest = urlToRequest {
             
-            guard let url = urlComponents.url else {
-                
-                let mbError = MBError.init(mbErrorCode: MBErrorCode.GeneralError)
-                mbError.mbErrorDebugInfo = "problem with URL while fetching comment for post id \(postId)"
-                completionHandler(nil , mbError)
-                return
-            }
             dataTask =
-                defaultSession.dataTask(with: url) { [weak self] data, response, error in
+                BaseWorkerClass.sessionManager.dataTask(with: urlToRequest) { [weak self] data, response, error in
                     defer {
                         self?.dataTask = nil
                     }
@@ -88,6 +82,34 @@ class CommentSectionWorker
             mbError.mbErrorDebugInfo = "problem with URL while fetching request for Post list for author id \(postId)"
             completionHandler(nil , mbError)
         }
+        
+    }
+    
+    
+    override func createURLStringWith(baseUrl : String , sortOrder : SortOrder , requestForEntity : String , queryString : String , pageIndexToBeFetched : Int?) -> URL?
+    {
+        let concatenatedURL = baseUrl + requestForEntity
+        var orderQuery = fetchRequestQueryParameterFor(order: sortOrder)
+        
+        if let pageNumber = pageIndexToBeFetched
+        {
+            orderQuery = orderQuery +  "&" + "_page=" + String(pageNumber)
+        }
+        
+        if var urlComponents = URLComponents(string: concatenatedURL) {
+            urlComponents.query = queryString + "&" + orderQuery
+            
+            
+            guard let urlToRequest = urlComponents.url else {
+                
+                return nil
+            }
+            
+            return urlToRequest
+            
+        }
+        
+        return nil        
         
     }
 }

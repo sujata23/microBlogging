@@ -45,7 +45,7 @@ class AuthorPostDetailsViewControllerTests: XCTestCase {
     
     class PostDetailsBusinessLogicSpy: AuthorPostDetailsBusinessLogic , AuthorPostDetailsDataStore
     {
-
+        var postList: [Post]?
         var author: Author!
         
     

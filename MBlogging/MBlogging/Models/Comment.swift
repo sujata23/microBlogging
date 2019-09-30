@@ -16,7 +16,7 @@ struct Comment : Decodable
     var userName: String
     var body: String
     var avatarUrl: String
-    var postId: String
+    var postId: Int
     var email: String
 
 }

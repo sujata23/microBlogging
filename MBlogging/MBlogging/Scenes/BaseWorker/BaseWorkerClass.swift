@@ -35,4 +35,10 @@ class BaseWorkerClass
             return ""
         }
     }
+    
+     func createURLStringWith(baseUrl : String , sortOrder : SortOrder , requestForEntity : String , queryString : String , pageIndexToBeFetched : Int?) -> URL?
+    {
+        //will be overriden in Subclasses
+        return nil
+    }
 }
