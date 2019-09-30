@@ -43,9 +43,15 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
     
     static let cellIdentifier =  "CommentCell"
     
+    //Property
+    var pageToBeFetched = 1 // Maintains page number to be fetched. Value will be incremented with User scrolling
+
+    
     var interactor: CommentSectionBusinessLogic?
     var router: (NSObjectProtocol & CommentSectionRoutingLogic & CommentSectionDataPassing)?
     
+    var referencePost : CommentSection.FetchReferencePost.ViewModel.DisplayPost?
+
     var displayedComments : [CommentSection.FetchCommentList.ViewModel.DisplayedComment] = []
     
     
@@ -144,7 +150,7 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
     func fetchCommentFor(postId : String)
     {
         let request = CommentSection.FetchCommentList.Request(postId: postId)
-        interactor?.fetchCommentDetails(request: request, order: .ascending, pageNumber: 1)
+        interactor?.fetchCommentDetails(request: request, order: .ascending, pageNumber: pageToBeFetched)
     }
     
     
@@ -153,7 +159,9 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
     
     func displayReferencePost(viewModel: CommentSection.FetchReferencePost.ViewModel) {
         
+        referencePost = viewModel.postInfo
         let postId = viewModel.postInfo.id
+        
         fetchCommentFor(postId: postId)
     }
     
@@ -167,6 +175,16 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
     func errorReceivedInCommentFetchRequest(error : MBError)
     {
         
+        self.isOngoingRequest = false
+        
+        if pageToBeFetched != 1
+        {
+            pageToBeFetched = pageToBeFetched - 1
+        }
+        else
+        {
+            //Depending on whether we need to show any error or not
+        }
     }
     
     
@@ -191,6 +209,23 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
         cell.initWith(comment: displayedComment)
         return cell
     }
+    
+    
+    //MARK: Pagination functions
+    
+    
+    /**
+     Use this function to implement functionality required when user scroll down in UITableView
+     */
+    override func fetchNextBatchRequest()
+    {
+        guard  let referencePost = referencePost else {
+            return
+        }
+        pageToBeFetched =  pageToBeFetched + 1
+        fetchCommentFor(postId: referencePost.id)
+    }
+    
     
     
 }
