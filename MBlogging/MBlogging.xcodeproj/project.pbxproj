@@ -11,6 +11,9 @@
 		F028FA322341E1D700818FCD /* BasePresenterClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F028FA312341E1D700818FCD /* BasePresenterClass.swift */; };
 		F028FA342341E27200818FCD /* CommentSectionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F028FA332341E27200818FCD /* CommentSectionRouter.swift */; };
 		F028FA3D2342811B00818FCD /* BasePresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F028FA3C2342811B00818FCD /* BasePresenterTest.swift */; };
+		F028FA42234288CB00818FCD /* CommentSectionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F028FA41234288CB00818FCD /* CommentSectionViewControllerTests.swift */; };
+		F028FA442342967400818FCD /* CommentSectionInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F028FA432342967400818FCD /* CommentSectionInteractorTest.swift */; };
+		F028FA4623429F6D00818FCD /* CommentSectionPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F028FA4523429F6D00818FCD /* CommentSectionPresenterTests.swift */; };
 		F02BC1A8233FA91C00E96C33 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02BC1A7233FA91C00E96C33 /* Post.swift */; };
 		F02BC1AB233FAFBA00E96C33 /* PostDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02BC1A9233FAFBA00E96C33 /* PostDetailsCell.swift */; };
 		F02BC1AC233FAFBA00E96C33 /* PostDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02BC1AA233FAFBA00E96C33 /* PostDetailsCell.xib */; };
@@ -81,6 +84,9 @@
 		F028FA312341E1D700818FCD /* BasePresenterClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasePresenterClass.swift; sourceTree = "<group>"; };
 		F028FA332341E27200818FCD /* CommentSectionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSectionRouter.swift; sourceTree = "<group>"; };
 		F028FA3C2342811B00818FCD /* BasePresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasePresenterTest.swift; sourceTree = "<group>"; };
+		F028FA41234288CB00818FCD /* CommentSectionViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentSectionViewControllerTests.swift; sourceTree = "<group>"; };
+		F028FA432342967400818FCD /* CommentSectionInteractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentSectionInteractorTest.swift; sourceTree = "<group>"; };
+		F028FA4523429F6D00818FCD /* CommentSectionPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentSectionPresenterTests.swift; sourceTree = "<group>"; };
 		F02BC1A7233FA91C00E96C33 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		F02BC1A9233FAFBA00E96C33 /* PostDetailsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsCell.swift; sourceTree = "<group>"; };
 		F02BC1AA233FAFBA00E96C33 /* PostDetailsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostDetailsCell.xib; sourceTree = "<group>"; };
@@ -172,6 +178,16 @@
 				F028FA3C2342811B00818FCD /* BasePresenterTest.swift */,
 			);
 			path = BasePresenter;
+			sourceTree = "<group>";
+		};
+		F028FA3E2342858E00818FCD /* CommentSection */ = {
+			isa = PBXGroup;
+			children = (
+				F028FA4523429F6D00818FCD /* CommentSectionPresenterTests.swift */,
+				F028FA432342967400818FCD /* CommentSectionInteractorTest.swift */,
+				F028FA41234288CB00818FCD /* CommentSectionViewControllerTests.swift */,
+			);
+			path = CommentSection;
 			sourceTree = "<group>";
 		};
 		F02BC1B1233FE7A600E96C33 /* Utility */ = {
@@ -383,6 +399,7 @@
 		F0F6C687233E16A10001F92E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				F028FA3E2342858E00818FCD /* CommentSection */,
 				F028FA3B234280B000818FCD /* BasePresenter */,
 				F040DFEA2341326B001963AF /* BaseWorker */,
 				F0F6C688233E16A10001F92E /* AuthorList */,
@@ -558,9 +575,12 @@
 				F02BC1B3233FE7EE00E96C33 /* StringShortcutTest.swift in Sources */,
 				F02BC1B5233FEA2E00E96C33 /* UtilityClassTest.swift in Sources */,
 				F0F6C68E233E24CB0001F92E /* Seeds.swift in Sources */,
+				F028FA4623429F6D00818FCD /* CommentSectionPresenterTests.swift in Sources */,
+				F028FA42234288CB00818FCD /* CommentSectionViewControllerTests.swift in Sources */,
 				F01300D2233E9DA000F18731 /* AuthorPresenterTests.swift in Sources */,
 				F040DFCE2340AACA001963AF /* AuthorPostDetailsPresenterTests.swift in Sources */,
 				F028FA3D2342811B00818FCD /* BasePresenterTest.swift in Sources */,
+				F028FA442342967400818FCD /* CommentSectionInteractorTest.swift in Sources */,
 				F0F6C68A233E16A10001F92E /* AuthorListViewControllerTests.swift in Sources */,
 				F08C12B7233FFBE100FC61B0 /* AuthorPostDetailsViewControllerTests.swift in Sources */,
 			);

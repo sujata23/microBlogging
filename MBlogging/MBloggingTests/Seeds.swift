@@ -41,4 +41,12 @@ struct Seeds
         static let descOrderQueryStr = "_sort=date&_order=desc"
         
     }
+    
+    struct Comments
+    {
+        
+        static let firstComment = Comment.init(id: 1, date: "2017-12-05T02:18:18.571Z", userName: "commenter1", body: "test comment1", avatarUrl: "avater URL", postId: 1, email: "emailid@test.com")
+        static let secondComment = Comment.init(id: 2, date: "2017-12-06T02:18:18.571Z", userName: "commenter2", body: "test comment2", avatarUrl: "avater URL2", postId: 2, email: "emailid2@test.com")
+        
+    }
 }
