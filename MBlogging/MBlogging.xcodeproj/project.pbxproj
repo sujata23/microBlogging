@@ -10,6 +10,7 @@
 		F01300D2233E9DA000F18731 /* AuthorPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01300D1233E9DA000F18731 /* AuthorPresenterTests.swift */; };
 		F028FA322341E1D700818FCD /* BasePresenterClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F028FA312341E1D700818FCD /* BasePresenterClass.swift */; };
 		F028FA342341E27200818FCD /* CommentSectionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F028FA332341E27200818FCD /* CommentSectionRouter.swift */; };
+		F028FA3D2342811B00818FCD /* BasePresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F028FA3C2342811B00818FCD /* BasePresenterTest.swift */; };
 		F02BC1A8233FA91C00E96C33 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02BC1A7233FA91C00E96C33 /* Post.swift */; };
 		F02BC1AB233FAFBA00E96C33 /* PostDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02BC1A9233FAFBA00E96C33 /* PostDetailsCell.swift */; };
 		F02BC1AC233FAFBA00E96C33 /* PostDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02BC1AA233FAFBA00E96C33 /* PostDetailsCell.xib */; };
@@ -79,6 +80,7 @@
 		F01300D1233E9DA000F18731 /* AuthorPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorPresenterTests.swift; sourceTree = "<group>"; };
 		F028FA312341E1D700818FCD /* BasePresenterClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasePresenterClass.swift; sourceTree = "<group>"; };
 		F028FA332341E27200818FCD /* CommentSectionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSectionRouter.swift; sourceTree = "<group>"; };
+		F028FA3C2342811B00818FCD /* BasePresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasePresenterTest.swift; sourceTree = "<group>"; };
 		F02BC1A7233FA91C00E96C33 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		F02BC1A9233FAFBA00E96C33 /* PostDetailsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsCell.swift; sourceTree = "<group>"; };
 		F02BC1AA233FAFBA00E96C33 /* PostDetailsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostDetailsCell.xib; sourceTree = "<group>"; };
@@ -160,6 +162,14 @@
 			isa = PBXGroup;
 			children = (
 				F028FA312341E1D700818FCD /* BasePresenterClass.swift */,
+			);
+			path = BasePresenter;
+			sourceTree = "<group>";
+		};
+		F028FA3B234280B000818FCD /* BasePresenter */ = {
+			isa = PBXGroup;
+			children = (
+				F028FA3C2342811B00818FCD /* BasePresenterTest.swift */,
 			);
 			path = BasePresenter;
 			sourceTree = "<group>";
@@ -373,6 +383,7 @@
 		F0F6C687233E16A10001F92E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				F028FA3B234280B000818FCD /* BasePresenter */,
 				F040DFEA2341326B001963AF /* BaseWorker */,
 				F0F6C688233E16A10001F92E /* AuthorList */,
 				F08C12B5233FFBE100FC61B0 /* PostDetails */,
@@ -549,6 +560,7 @@
 				F0F6C68E233E24CB0001F92E /* Seeds.swift in Sources */,
 				F01300D2233E9DA000F18731 /* AuthorPresenterTests.swift in Sources */,
 				F040DFCE2340AACA001963AF /* AuthorPostDetailsPresenterTests.swift in Sources */,
+				F028FA3D2342811B00818FCD /* BasePresenterTest.swift in Sources */,
 				F0F6C68A233E16A10001F92E /* AuthorListViewControllerTests.swift in Sources */,
 				F08C12B7233FFBE100FC61B0 /* AuthorPostDetailsViewControllerTests.swift in Sources */,
 			);

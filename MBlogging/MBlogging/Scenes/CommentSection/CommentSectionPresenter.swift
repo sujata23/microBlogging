@@ -52,7 +52,7 @@ class CommentSectionPresenter: BasePresenterClass, CommentSectionPresentationLog
         {
             for comment in commentList {
                 
-                let dateToShow = dateModificationForPost(sourceDate: comment.date)
+                let dateToShow = dateModification(sourceDate: comment.date)
                 let displayedComment = CommentSection.FetchCommentList.ViewModel.DisplayedComment(userName: comment.userName.trim(), date: dateToShow, body: comment.body.trim(), avatarUrl: comment.avatarUrl.trim())
                 //AuthorPostDetails.FetchPostDetails.ViewModel.DisplayedPost(title: post.title, date: dateToShow, body: post.body)
                 

@@ -18,7 +18,7 @@ class BasePresenterClass
      Modify date to show in post viewmodel
      */
     
-    func dateModificationForPost(sourceDate : String?) -> String
+    func dateModification(sourceDate : String?) -> String
     {
         guard let sourceDate = sourceDate else {
             return ""
@@ -28,7 +28,7 @@ class BasePresenterClass
             return ""
         }
         
-        let initialDate = UtilityClass.stringToDateFormat(dateInString: sourceDate)
+        let initialDate = UtilityClass.stringToDateFormat(dateInString: sourceDate.trim())
         
         var dateInString = ""
         

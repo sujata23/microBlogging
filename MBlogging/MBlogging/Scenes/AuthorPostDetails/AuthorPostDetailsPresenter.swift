@@ -51,7 +51,7 @@ class AuthorPostDetailsPresenter: BasePresenterClass, AuthorPostDetailsPresentat
         {
             for post in postList {
                 
-                let dateToShow = dateModificationForPost(sourceDate: post.date)
+                let dateToShow = dateModification(sourceDate: post.date)
                 let displayedPost = AuthorPostDetails.FetchPostDetails.ViewModel.DisplayedPost(title: post.title, date: dateToShow, body: post.body)
                 
                 displayedPostList.append(displayedPost)
