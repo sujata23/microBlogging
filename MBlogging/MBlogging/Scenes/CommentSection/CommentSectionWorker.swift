@@ -86,7 +86,7 @@ class CommentSectionWorker : BaseWorkerClass
     }
     
     
-    override func createURLStringWith(baseUrl : String , sortOrder : SortOrder , requestForEntity : String , queryString : String , pageIndexToBeFetched : Int?) -> URL?
+    override func createURLStringWith(baseUrl : String , sortOrder : SortOrder , requestForEntity : String , queryString : String? , pageIndexToBeFetched : Int?) -> URL?
     {
         let concatenatedURL = baseUrl + requestForEntity
         var orderQuery = fetchRequestQueryParameterFor(order: sortOrder)
@@ -97,7 +97,16 @@ class CommentSectionWorker : BaseWorkerClass
         }
         
         if var urlComponents = URLComponents(string: concatenatedURL) {
-            urlComponents.query = queryString + "&" + orderQuery
+            
+            if let queryString = queryString
+            {
+                urlComponents.query = queryString + "&" + orderQuery
+
+            }
+            else
+            {
+               urlComponents.query = orderQuery
+            }
             
             
             guard let urlToRequest = urlComponents.url else {

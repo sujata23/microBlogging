@@ -23,21 +23,15 @@ class AuthorListWorker : BaseWorkerClass
      parameter 2:- page number to fetch(Every page contains 10 authors)
      
     */
-    func fetchAuthorList(url: String, pageNumber : Int ,  completionHandler: @escaping (_: [Author]?, _: MBError?) -> Void)
+    func fetchAuthorList(url: String, pageNumber : Int , sortOrder : SortOrder,  completionHandler: @escaping (_: [Author]?, _: MBError?) -> Void)
     {
         var authorFectchUrl = url
         authorFectchUrl = authorFectchUrl + Constants.authorURLParameter
         
-        if var urlComponents = URLComponents(string: authorFectchUrl) {
-            urlComponents.query = "_page=\(pageNumber)"
+        let urlToRequest = createURLStringWith(baseUrl: url, sortOrder: sortOrder, requestForEntity: Constants.authorURLParameter, queryString: nil, pageIndexToBeFetched: pageNumber)
+        
+        if let url = urlToRequest {
             
-            guard let url = urlComponents.url else {
-                
-                let mbError = MBError.init(mbErrorCode: MBErrorCode.GeneralError)
-                mbError.mbErrorDebugInfo = "problem with URL while fetching request for Author list for page index \(pageNumber)"
-                completionHandler(nil , mbError)
-                return
-            }
             dataTask =
                 BaseWorkerClass.sessionManager.dataTask(with: url) { [weak self] data, response, error in
                     defer {
@@ -88,6 +82,33 @@ class AuthorListWorker : BaseWorkerClass
             mbError.mbErrorDebugInfo = "problem with URL while fetching request for Author list for page index \(pageNumber)"
             completionHandler(nil , mbError)
         }
+        
+    }
+    
+    override func createURLStringWith(baseUrl : String , sortOrder : SortOrder , requestForEntity : String , queryString : String? , pageIndexToBeFetched : Int?) -> URL?
+    {
+        let concatenatedURL = baseUrl + requestForEntity
+        var orderQuery = fetchRequestQueryParameterFor(order: sortOrder)
+        
+        if let pageNumber = pageIndexToBeFetched
+        {
+            orderQuery = orderQuery +  "&" + "_page=" + String(pageNumber)
+        }
+        
+        if var urlComponents = URLComponents(string: concatenatedURL) {
+            urlComponents.query =  orderQuery
+            
+            
+            guard let urlToRequest = urlComponents.url else {
+                
+                return nil
+            }
+            
+            return urlToRequest
+            
+        }
+        
+        return nil
         
     }
     

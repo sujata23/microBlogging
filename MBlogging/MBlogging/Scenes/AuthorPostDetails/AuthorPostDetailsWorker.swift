@@ -25,23 +25,13 @@ class AuthorPostDetailsWorker : BaseWorkerClass
      */
     func fetchPostDetails(url : String , authorID : String, order : SortOrder , completionHandler: @escaping (_: [Post]?, _: MBError?) -> Void)
     {
-        var postFectchUrl = url
-        postFectchUrl = postFectchUrl + Constants.postURLParameter
         
-        let orderQuery = fetchRequestQueryParameterFor(order: order)
+        let urlToRequest = createURLStringWith(baseUrl: url, sortOrder: order, requestForEntity: Constants.postURLParameter, queryString: "authorId=\(authorID)", pageIndexToBeFetched: nil)
         
-        if var urlComponents = URLComponents(string: postFectchUrl) {
-            urlComponents.query = "authorId=\(authorID)&\(orderQuery)"
+        if let urlToReq = urlToRequest {
             
-            guard let url = urlComponents.url else {
-                
-                let mbError = MBError.init(mbErrorCode: MBErrorCode.GeneralError)
-                mbError.mbErrorDebugInfo = "problem with URL while fetching request for post list for author id \(authorID)"
-                completionHandler(nil , mbError)
-                return
-            }
             dataTask =
-                BaseWorkerClass.sessionManager.dataTask(with: url) { [weak self] data, response, error in
+                BaseWorkerClass.sessionManager.dataTask(with: urlToReq) { [weak self] data, response, error in
                     defer {
                         self?.dataTask = nil
                     }
@@ -89,6 +79,39 @@ class AuthorPostDetailsWorker : BaseWorkerClass
             mbError.mbErrorDebugInfo = "problem with URL while fetching request for Post list for author id \(authorID)"
             completionHandler(nil , mbError)
         }
+        
+    }
+    
+    
+    override func createURLStringWith(baseUrl : String , sortOrder : SortOrder , requestForEntity : String , queryString : String? , pageIndexToBeFetched : Int?) -> URL?
+    {
+        let concatenatedURL = baseUrl + requestForEntity
+        let orderQuery = fetchRequestQueryParameterFor(order: sortOrder)
+        
+
+        if var urlComponents = URLComponents(string: concatenatedURL) {
+            
+            if let queryString = queryString
+            {
+                urlComponents.query = queryString + "&" + orderQuery
+                
+            }
+            else
+            {
+                urlComponents.query = orderQuery
+            }
+            
+            
+            guard let urlToRequest = urlComponents.url else {
+                
+                return nil
+            }
+            
+            return urlToRequest
+            
+        }
+        
+        return nil
         
     }
     

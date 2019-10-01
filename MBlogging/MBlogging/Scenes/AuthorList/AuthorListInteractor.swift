@@ -34,7 +34,7 @@ class AuthorListInteractor: AuthorListBusinessLogic, AuthorListDataStore
     func fetchAuthors(request: AuthorList.FetchAuthorList.Request)
     {
         weak var weakself = self
-        worker.fetchAuthorList(url: request.urlToRequest, pageNumber: request.pageNumber, completionHandler: { (authorList, error) in
+        worker.fetchAuthorList(url: request.urlToRequest, pageNumber: request.pageNumber, sortOrder: request.sortOrder , completionHandler: { (authorList, error) in
             
             if let authors = authorList
             {

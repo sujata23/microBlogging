@@ -22,6 +22,7 @@ enum AuthorList
     {
         var pageNumber : Int = 0
         var urlToRequest : String = ""
+        var sortOrder : SortOrder = .ascending
 
     }
     struct Response

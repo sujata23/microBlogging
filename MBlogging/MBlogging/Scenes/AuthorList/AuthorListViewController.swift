@@ -139,7 +139,7 @@ class AuthorListViewController: BaseTableViewController, AuthorListDisplayLogic
      */
     func fetchAuthors()
     {
-        let request = AuthorList.FetchAuthorList.Request(pageNumber: pageToBeFetched, urlToRequest: Constants.baseURL)
+        let request = AuthorList.FetchAuthorList.Request(pageNumber: pageToBeFetched, urlToRequest: Constants.baseURL , sortOrder: .ascending)
         interactor?.fetchAuthors(request: request)
     }
     
