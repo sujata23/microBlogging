@@ -39,10 +39,19 @@ class AuthorListInteractor: AuthorListBusinessLogic, AuthorListDataStore
             if let authors = authorList
             {
                 
-                weakself?.authors?.append(contentsOf: authors)
-                
-                let response = AuthorList.FetchAuthorList.Response(authors: authors, error: nil)
-                weakself?.presenter?.presentAuthorList(response: response)
+                if authors.count == 0
+                {
+                    let emptyError = MBError.init(mbErrorCode: .EmptyData)
+                    let response = AuthorList.FetchAuthorList.Response(authors: nil, error: emptyError)
+                    weakself?.presenter?.presentAuthorList(response: response)
+                }
+                else
+                {
+                    weakself?.authors?.append(contentsOf: authors)
+                    
+                    let response = AuthorList.FetchAuthorList.Response(authors: authors, error: nil)
+                    weakself?.presenter?.presentAuthorList(response: response)
+                }
             }
             else if let error = error
             {

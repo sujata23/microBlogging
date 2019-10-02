@@ -129,6 +129,10 @@ class AuthorListViewController: BaseTableViewController, AuthorListDisplayLogic
     {
         let authorListCell = UINib(nibName: "AuthorListCell", bundle: nil)
         self.tableView.register(authorListCell, forCellReuseIdentifier: AuthorListViewController.cellIdentifier)
+        //Loading cell register
+        
+        let loadingNib = UINib(nibName: "LoadingCell", bundle: nil)
+        self.tableView.register(loadingNib, forCellReuseIdentifier: "loadingCell")
     }
     
     
@@ -138,7 +142,7 @@ class AuthorListViewController: BaseTableViewController, AuthorListDisplayLogic
      Call this function to get list of Authors.
      */
     func fetchAuthors()
-    {
+    {   isOngoingRequest = true
         let request = AuthorList.FetchAuthorList.Request(pageNumber: pageToBeFetched, urlToRequest: Constants.baseURL , sortOrder: .ascending)
         interactor?.fetchAuthors(request: request)
     }
@@ -158,13 +162,24 @@ class AuthorListViewController: BaseTableViewController, AuthorListDisplayLogic
         
         self.isOngoingRequest = false
         
-        if pageToBeFetched != 1
+        if  error.errorCode != nil && (error.errorCode)! == .EmptyData
         {
+            self.isPaginationRequired = false
             pageToBeFetched = pageToBeFetched - 1
+            self.tableView.reloadData()
+            
         }
         else
         {
-            //Depending on whether we need to show any error or not
+            
+            if pageToBeFetched != 1
+            {
+                pageToBeFetched = pageToBeFetched - 1
+            }
+            else
+            {
+                //Depending on whether we need to show any error or not
+            }
         }
     }
     
@@ -174,20 +189,41 @@ class AuthorListViewController: BaseTableViewController, AuthorListDisplayLogic
     
     override func numberOfSections(in tableView: UITableView) -> Int
     {
+        if isPaginationRequired == true
+        {
+            return 2
+
+        }
+        
         return 1
+
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return displayedAuthors.count
+        if section == 0 {
+            return displayedAuthors.count
+        } else if section == 1 && isOngoingRequest {
+            return 1
+        }
+        return 0
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> AuthorListCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let displayedAuthor = displayedAuthors[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: AuthorListViewController.cellIdentifier) as! AuthorListCell
-        cell.initWith(authorDetails: displayedAuthor)
-        return cell
+        if indexPath.section == 0 {
+            
+            let displayedAuthor = displayedAuthors[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: AuthorListViewController.cellIdentifier) as! AuthorListCell
+            cell.initWith(authorDetails: displayedAuthor)
+            return cell
+            
+        } else {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "loadingCell", for: indexPath) as! LoadingCell
+            cell.spinner.startAnimating()
+            return cell
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -210,6 +246,11 @@ class AuthorListViewController: BaseTableViewController, AuthorListDisplayLogic
      */
     override func fetchNextBatchRequest()
     {
+        guard isOngoingRequest == false else
+        {
+            return
+        }
+        
         pageToBeFetched =  pageToBeFetched + 1
         fetchAuthors()
     }

@@ -60,6 +60,8 @@
 		F0587506233D353400F0E5D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0587504233D353400F0E5D1 /* LaunchScreen.storyboard */; };
 		F058752D233D75F700F0E5D1 /* MBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F058752B233D75F700F0E5D1 /* MBError.swift */; };
 		F058752E233D75F700F0E5D1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F058752C233D75F700F0E5D1 /* Constants.swift */; };
+		F05A9485234476EE004FC2D0 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F05A9483234476EE004FC2D0 /* LoadingCell.xib */; };
+		F05A9486234476EE004FC2D0 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05A9484234476EE004FC2D0 /* LoadingCell.swift */; };
 		F08C12B7233FFBE100FC61B0 /* AuthorPostDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08C12B6233FFBE100FC61B0 /* AuthorPostDetailsViewControllerTests.swift */; };
 		F0D57BA2234083B500C6267B /* AuthorPostInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D57BA1234083B500C6267B /* AuthorPostInteractorTests.swift */; };
 		F0F6C63B233DE5200001F92E /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F6C63A233DE5200001F92E /* Author.swift */; };
@@ -135,6 +137,8 @@
 		F0587507233D353400F0E5D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F058752B233D75F700F0E5D1 /* MBError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBError.swift; sourceTree = "<group>"; };
 		F058752C233D75F700F0E5D1 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F05A9483234476EE004FC2D0 /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
+		F05A9484234476EE004FC2D0 /* LoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		F08C12B6233FFBE100FC61B0 /* AuthorPostDetailsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorPostDetailsViewControllerTests.swift; sourceTree = "<group>"; };
 		F0D57BA1234083B500C6267B /* AuthorPostInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorPostInteractorTests.swift; sourceTree = "<group>"; };
 		F0F6C63A233DE5200001F92E /* Author.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
@@ -221,6 +225,7 @@
 		F02EB932233F69D400A18AA1 /* CustomCell */ = {
 			isa = PBXGroup;
 			children = (
+				F05A9482234476EE004FC2D0 /* DataLodingCell */,
 				F040DFED23415630001963AF /* CommentCell.swift */,
 				F040DFEE23415630001963AF /* CommentCell.xib */,
 				F02BC1A9233FAFBA00E96C33 /* PostDetailsCell.swift */,
@@ -364,6 +369,15 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		F05A9482234476EE004FC2D0 /* DataLodingCell */ = {
+			isa = PBXGroup;
+			children = (
+				F05A9483234476EE004FC2D0 /* LoadingCell.xib */,
+				F05A9484234476EE004FC2D0 /* LoadingCell.swift */,
+			);
+			path = DataLodingCell;
+			sourceTree = "<group>";
+		};
 		F08C12B5233FFBE100FC61B0 /* PostDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -505,6 +519,7 @@
 				F0587503233D353400F0E5D1 /* Assets.xcassets in Resources */,
 				F02BC1AC233FAFBA00E96C33 /* PostDetailsCell.xib in Resources */,
 				F0587501233D353300F0E5D1 /* Main.storyboard in Resources */,
+				F05A9485234476EE004FC2D0 /* LoadingCell.xib in Resources */,
 				F040DFF023415631001963AF /* CommentCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -556,6 +571,7 @@
 				F040DFDF23411E5D001963AF /* CommentSectionPresenter.swift in Sources */,
 				F02EB96D233F754300A18AA1 /* BaseTableViewController.swift in Sources */,
 				F02EB95C233F6A8400A18AA1 /* Reachability.swift in Sources */,
+				F05A9486234476EE004FC2D0 /* LoadingCell.swift in Sources */,
 				F028FA322341E1D700818FCD /* BasePresenterClass.swift in Sources */,
 				F058752E233D75F700F0E5D1 /* Constants.swift in Sources */,
 				F02EB94C233F69DF00A18AA1 /* AuthorListPresenter.swift in Sources */,

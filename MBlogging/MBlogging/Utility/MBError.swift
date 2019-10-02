@@ -26,6 +26,9 @@ public enum MBErrorCode : Int {
     
     //Represent Network error
     case NetworkError
+    
+    //Represent Empty data error
+    case EmptyData
 }
 
 
@@ -37,7 +40,7 @@ public class MBError : NSError {
      ErroCode type
      */
     
-    public var erroCode = MBErrorCode(rawValue: 0)
+    public var errorCode = MBErrorCode(rawValue: 0)
     /**
      This error code, will need to triage issue. Should include while sending an error log message to ominture.
      */
@@ -68,7 +71,7 @@ public class MBError : NSError {
     public init(mbErrorCode errorCode: MBErrorCode) {
         super.init(domain: MBErrorDomainName, code: errorCode.rawValue, userInfo: nil)
         
-        erroCode = errorCode
+        self.errorCode = errorCode
         mbErrorCodeString = MBError.mbEsrrorCodeString(for: errorCode)
     }
     
@@ -91,6 +94,8 @@ public class MBError : NSError {
         case .NetworkError:
             errorCode = "MB04"
 
+        case .EmptyData:
+            errorCode = "MB05"
         }
         return errorCode
     }

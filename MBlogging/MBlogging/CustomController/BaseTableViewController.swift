@@ -24,6 +24,10 @@ class BaseTableViewController : UITableViewController
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
+        guard NetworkManager.sharedInstance.isInternetAccessible == true else {
+            
+            return
+        }
         guard isPaginationRequired == true else
         {
             return
@@ -33,7 +37,7 @@ class BaseTableViewController : UITableViewController
         let contentHeight = scrollView.contentSize.height
         
         
-        if offsetY > contentHeight - scrollView.frame.height * 4 {
+        if offsetY > contentHeight - scrollView.frame.height  {
             if !isOngoingRequest {
                 fetchNextBatchRequest()
             }
