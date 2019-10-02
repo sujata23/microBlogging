@@ -127,6 +127,9 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
     {
         let authorListCell = UINib(nibName: "CommentCell", bundle: nil)
         self.tableView.register(authorListCell, forCellReuseIdentifier: CommentSectionViewController.cellIdentifier)
+        
+        let loadingNib = UINib(nibName: "LoadingCell", bundle: nil)
+        self.tableView.register(loadingNib, forCellReuseIdentifier: "loadingCell")
     }
     
     //MARK: Data Fetch functions
@@ -149,6 +152,7 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
     
     func fetchCommentFor(postId : String)
     {
+        isOngoingRequest = true
         let request = CommentSection.FetchCommentList.Request(postId: postId)
         interactor?.fetchCommentDetails(request: request, order: .ascending, pageNumber: pageToBeFetched)
     }
@@ -159,6 +163,7 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
     
     func displayReferencePost(viewModel: CommentSection.FetchReferencePost.ViewModel) {
         
+        isOngoingRequest = false
         referencePost = viewModel.postInfo
         let postId = viewModel.postInfo.id
         
@@ -167,6 +172,7 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
     
     func displayCommentList(viewModel: CommentSection.FetchCommentList.ViewModel) {
         
+        isOngoingRequest = false
         displayedComments = viewModel.commentList
         tableView.reloadData()
     }
@@ -177,13 +183,24 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
         
         self.isOngoingRequest = false
         
-        if pageToBeFetched != 1
+        if  error.errorCode != nil && (error.errorCode)! == .EmptyData
         {
+            self.isPaginationRequired = false
             pageToBeFetched = pageToBeFetched - 1
+            self.tableView.reloadData()
+            
         }
         else
         {
-            //Depending on whether we need to show any error or not
+            
+            if pageToBeFetched != 1
+            {
+                pageToBeFetched = pageToBeFetched - 1
+            }
+            else
+            {
+                //Depending on whether we need to show any error or not
+            }
         }
     }
     
@@ -194,20 +211,40 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
     
     override func numberOfSections(in tableView: UITableView) -> Int
     {
+        if isPaginationRequired == true
+        {
+            return 2
+            
+        }
+        
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return displayedComments.count
+        if section == 0 {
+            return displayedComments.count
+        } else if section == 1 && isOngoingRequest {
+            return 1
+        }
+        return 0
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> CommentCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let displayedComment = displayedComments[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: CommentSectionViewController.cellIdentifier) as! CommentCell
-        cell.initWith(comment: displayedComment)
-        return cell
+        if indexPath.section == 0 {
+            
+            let displayedComment = displayedComments[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: CommentSectionViewController.cellIdentifier) as! CommentCell
+            cell.initWith(comment: displayedComment)
+            return cell
+        }
+        else {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "loadingCell", for: indexPath) as! LoadingCell
+            cell.spinner.startAnimating()
+            return cell
+        }
     }
     
     

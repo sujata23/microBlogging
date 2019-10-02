@@ -61,8 +61,28 @@ class CommentSectionInteractor: CommentSectionBusinessLogic, CommentSectionDataS
         
         worker?.fetchComments(url: Constants.baseURL, pageNumber: pageNumber, postId: postId, sortOrder: order, completionHandler: { (commentList, error) in
             
-            let response = CommentSection.FetchCommentList.Response(commentList: commentList, error: nil)
-            weakSelf?.presenter?.presentCommentList(response: response)
+            if let commentList = commentList
+            {
+                if commentList.count == 0
+                {
+                    let emptyError = MBError.init(mbErrorCode: .EmptyData)
+                    let response = CommentSection.FetchCommentList.Response(commentList: nil, error: emptyError)
+                    weakSelf?.presenter?.presentCommentList(response: response)
+                }
+                else
+                {
+                    let response = CommentSection.FetchCommentList.Response(commentList: commentList, error: nil)
+                    weakSelf?.presenter?.presentCommentList(response: response)
+                    
+                }
+                
+            }
+            else if let  error = error
+            {
+                let response = CommentSection.FetchCommentList.Response(commentList: nil, error: error)
+                weakSelf?.presenter?.presentCommentList(response: response)
+            }
+            
         })
         
         
