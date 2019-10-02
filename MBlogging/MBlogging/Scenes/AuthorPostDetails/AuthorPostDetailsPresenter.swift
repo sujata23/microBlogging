@@ -62,7 +62,7 @@ class AuthorPostDetailsPresenter: BasePresenterClass, AuthorPostDetailsPresentat
         }
         else if let error = response.error
         {
-            viewController?.errorReceivedInAuthorFetchRequest(error: error)
+            viewController?.errorReceivedInPostFetchRequest(error: error)
             
         }
         else
@@ -70,7 +70,7 @@ class AuthorPostDetailsPresenter: BasePresenterClass, AuthorPostDetailsPresentat
             //Generic error
             let mbError = MBError.init(mbErrorCode: MBErrorCode.ServerError)
             mbError.mbErrorDebugInfo = "Generic error while fetching Post"
-            viewController?.errorReceivedInAuthorFetchRequest(error: mbError)
+            viewController?.errorReceivedInPostFetchRequest(error: mbError)
             
         }
         

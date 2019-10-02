@@ -35,7 +35,7 @@ protocol AuthorPostDetailsDisplayLogic: class
      In this function we can show the error to user , if required
      */
     
-    func errorReceivedInAuthorFetchRequest(error : MBError)
+    func errorReceivedInPostFetchRequest(error : MBError)
     
     
 }
@@ -184,7 +184,7 @@ class AuthorPostDetailsViewController: UITableViewController, AuthorPostDetailsD
         
     }
     
-    func errorReceivedInAuthorFetchRequest(error: MBError) {
+    func errorReceivedInPostFetchRequest(error: MBError) {
         
         //Currently we are not showing any error
     }

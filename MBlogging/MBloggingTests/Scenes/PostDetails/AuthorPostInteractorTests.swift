@@ -48,24 +48,43 @@ class AuthorPostInteractorTests: XCTestCase
     {
         presentPostListCalled = true
     }
-  }
-  
-  class AuthorsPostWorkerSpy: AuthorPostDetailsWorker
-  {
-    // MARK: Method call expectations
-    
-    var fetchPostListCalled = false
-    
-    // MARK: Spied methods
-    override func fetchPostDetails(url : String , authorID : String, order : SortOrder , completionHandler: @escaping (_: [Post]?, _: MBError?) -> Void)
-    {
-        fetchPostListCalled = true
-        completionHandler([Seeds.Posts.firstPost , Seeds.Posts.secondPost], nil)
-
     }
-
     
-  }
+    class AuthorsPostWorkerSpy: AuthorPostDetailsWorker
+    {
+        // MARK: Method call expectations
+        
+        var fetchPostListCalled = false
+        
+        // MARK: Spied methods
+        override func fetchPostDetails(url : String , authorID : String, order : SortOrder , completionHandler: @escaping (_: [Post]?, _: MBError?) -> Void)
+        {
+            fetchPostListCalled = true
+            completionHandler([Seeds.Posts.firstPost , Seeds.Posts.secondPost], nil)
+            
+        }
+        
+        
+    }
+    
+    
+    class AuthorsPostWorkerErrorSpy: AuthorPostDetailsWorker
+    {
+        // MARK: Method call expectations
+        
+        var fetchPostListCalled = false
+        
+        // MARK: Spied methods
+        override func fetchPostDetails(url : String , authorID : String, order : SortOrder , completionHandler: @escaping (_: [Post]?, _: MBError?) -> Void)
+        {
+            fetchPostListCalled = true
+            let error = MBError.init(mbErrorCode: .ServerError)
+            completionHandler(nil, error)
+            
+        }
+        
+        
+    }
   
   // MARK: - Tests
     
@@ -100,6 +119,42 @@ class AuthorPostInteractorTests: XCTestCase
         // Then
         XCTAssert(postWorkerSpy.fetchPostListCalled, "fetchPostDetails() should ask PostListWorker to fetch Posts")
         XCTAssert(postPresentationLogicSpy.presentPostListCalled, "presentPostList() should ask presenter to show Post list result")
+    }
+    
+    func testFetchPostDetailsShouldAskPresenterToFormatErrorResult()
+    {
+        // Given
+        interactorUnderTest.author = Seeds.Authors.secondAuthor
+        let postPresentationLogicSpy = AuthorPostListPresentationLogicSpy()
+        interactorUnderTest.presenter = postPresentationLogicSpy
+        let postWorkerSpy = AuthorsPostWorkerErrorSpy.init()
+        interactorUnderTest.worker = postWorkerSpy
+        
+        // When
+        let request = AuthorPostDetails.FetchPostDetails.Request(authorId: String(interactorUnderTest.author.id))
+        interactorUnderTest.fetchPostDetails(request: request, order: .ascending)
+        
+        // Then
+        XCTAssertTrue(postWorkerSpy.fetchPostListCalled, "fetchPostDetails() should notask PostListWorker to fetch Posts")
+        XCTAssertTrue(postPresentationLogicSpy.presentPostListCalled, "presentPostList() should ask presenter to show Post fetch error")
+    }
+
+    func testFetchPostDetailsWithoutAuthorId()
+    {
+        // Given
+        interactorUnderTest.author = Seeds.Authors.secondAuthor
+        let postPresentationLogicSpy = AuthorPostListPresentationLogicSpy()
+        interactorUnderTest.presenter = postPresentationLogicSpy
+        let postWorkerSpy = AuthorsPostWorkerErrorSpy.init()
+        interactorUnderTest.worker = postWorkerSpy
+        
+        // When
+        let request = AuthorPostDetails.FetchPostDetails.Request()
+        interactorUnderTest.fetchPostDetails(request: request, order: .ascending)
+        
+        // Then
+        XCTAssertFalse(postWorkerSpy.fetchPostListCalled, "fetchPostDetails() should notask PostListWorker to fetch Posts")
+        XCTAssertTrue(postPresentationLogicSpy.presentPostListCalled, "presentPostList() should ask presenter to show Post fetch error")
     }
  
 }

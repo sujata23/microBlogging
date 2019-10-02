@@ -53,7 +53,7 @@ class AuthorPostDetailsPresenterTests: XCTestCase
             self.viewModelPost = viewModel
         }
         
-        func errorReceivedInAuthorFetchRequest(error: MBError) {
+        func errorReceivedInPostFetchRequest(error: MBError) {
             
             errorCallBackForPostListCalled = true
         }

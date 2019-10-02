@@ -145,6 +145,21 @@ class AuthorPostDetailsViewControllerTests: XCTestCase {
         // Then
         XCTAssert(tableViewSpy.reloadDataCalled, "Displaying fetched Posts should reload the table view")
     }
+    
+    
+    func testShouldDisplayErrorinFetchingPost()
+    {
+        // Given
+        let tableViewSpy = TableViewSpy()
+        currentControllerUnderTest.tableView = tableViewSpy
+        
+        // When
+        let error = MBError.init(mbErrorCode: .ServerError)
+        currentControllerUnderTest.errorReceivedInPostFetchRequest(error: error)
+        
+        // Then
+        XCTAssertFalse(tableViewSpy.reloadDataCalled, "Displaying fetched Posts should not reload the table view")
+    }
 
     
     func testNumberOfRowsInAnySectionShouldEqaulNumberOfAuthorsToDisplay()

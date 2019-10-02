@@ -105,6 +105,59 @@ class AuthorListViewControllerTests: XCTestCase {
         XCTAssert(tableViewSpy.reloadDataCalled, "Displaying fetched Authors should reload the table view")
     }
     
+    func testAfterFetchingCompleteDataNoMoreDataShouldFetch()
+    {
+        // Given
+        let tableViewSpy = TableViewSpy()
+        currentControllerUnderTest.tableView = tableViewSpy
+        
+        // When
+        let error = MBError.init(mbErrorCode: .EmptyData)
+        currentControllerUnderTest.errorReceivedInAuthorFetchRequest(error: error)
+        
+        // Then
+        XCTAssert(tableViewSpy.reloadDataCalled, "Displaying fetched Authors should  remo e loader cell")
+        XCTAssertFalse(currentControllerUnderTest.isPaginationRequired, "No more pagination should happen")
+
+    }
+    
+    func testErrorWhileFetchingAuthor()
+    {
+        // Given
+        let tableViewSpy = TableViewSpy()
+        currentControllerUnderTest.tableView = tableViewSpy
+        
+        // When
+        let error = MBError.init(mbErrorCode: .GeneralError)
+        currentControllerUnderTest.pageToBeFetched = 2
+        currentControllerUnderTest.errorReceivedInAuthorFetchRequest(error: error)
+        
+        
+        // Then
+        XCTAssertFalse(tableViewSpy.reloadDataCalled, "Reload data should not get called")
+        XCTAssertTrue(currentControllerUnderTest.pageToBeFetched == 1, "page number should decreasedagain")
+
+    }
+    
+    func testErrorWhileFetchingAuthorForPageOne()
+    {
+        // Given
+        let tableViewSpy = TableViewSpy()
+        currentControllerUnderTest.tableView = tableViewSpy
+        
+        // When
+        let error = MBError.init(mbErrorCode: .GeneralError)
+        currentControllerUnderTest.errorReceivedInAuthorFetchRequest(error: error)
+        
+        
+        // Then
+        XCTAssertFalse(tableViewSpy.reloadDataCalled, "Reload data should not get called")
+        XCTAssertTrue(currentControllerUnderTest.pageToBeFetched == 1, "page number should decreasedagain")
+        
+    }
+    
+   
+    
     func testNumberOfRowsInAnySectionShouldEqaulNumberOfAuthorsToDisplay()
     {
         // Given
@@ -130,7 +183,7 @@ class AuthorListViewControllerTests: XCTestCase {
         
         // When
         let indexPath = IndexPath(row: 0, section: 0)
-        let cell = currentControllerUnderTest.tableView(tableView!, cellForRowAt: indexPath)
+        let cell = (currentControllerUnderTest.tableView(tableView!, cellForRowAt: indexPath)) as! AuthorListCell
         
         // Then
         XCTAssertEqual(cell.authorName?.text, "TestAuthor1", "A properly configured table view cell should display the authors name")

@@ -65,6 +65,42 @@ class CommentSectionInteractorTest: XCTestCase {
         }
         
     }
+    
+    class CommentWorkerErrorSpy: CommentSectionWorker
+    {
+        // MARK: Method call expectations
+        
+        var fetchCommentListCalled = false
+        
+        // MARK: Spied methods
+        
+        override func fetchComments(url: String, pageNumber: Int?, postId: String, sortOrder: SortOrder, completionHandler: @escaping ([Comment]?, MBError?) -> Void) {
+            
+            fetchCommentListCalled = true
+            completionHandler([], nil)
+        }
+        
+    }
+
+ 
+    class CommentWorkerGeneralErrorSpy: CommentSectionWorker
+    {
+        // MARK: Method call expectations
+        
+        var fetchCommentListCalled = false
+        
+        // MARK: Spied methods
+        
+        override func fetchComments(url: String, pageNumber: Int?, postId: String, sortOrder: SortOrder, completionHandler: @escaping ([Comment]?, MBError?) -> Void) {
+
+            fetchCommentListCalled = true
+            let error = MBError.init(mbErrorCode: .GeneralError)
+
+            completionHandler(nil, error)
+        }
+        
+    }
+    
     override func tearDown() {
         super.tearDown()
     }
@@ -105,5 +141,63 @@ class CommentSectionInteractorTest: XCTestCase {
     }
     
     
+    func testFetchCommentShouldAskCommentWorkerToFetchCommentsAndPresenterToShowFullyLoadedData()
+    {
+        // Given
+        interactorUnderTest.referencePost = Seeds.Posts.firstPost
+
+        let commentPresentationLogicSpy = CommentListPresentationLogicSpy()
+        interactorUnderTest.presenter = commentPresentationLogicSpy
+        let commentWorkerSpy = CommentWorkerErrorSpy.init()
+        interactorUnderTest.worker = commentWorkerSpy
+        
+        // When
+        let request = CommentSection.FetchCommentList.Request(postId: String(interactorUnderTest.referencePost.id))
+        interactorUnderTest.fetchCommentDetails(request: request, order: .ascending, pageNumber: 1)
+        
+        // Then
+        XCTAssert(commentWorkerSpy.fetchCommentListCalled, "FetchCommentList() should ask CommentWorker to fetch Comment")
+        XCTAssert(commentPresentationLogicSpy.presentCommentListCalled, "FetchCommentList() should ask presenter to show comments result")
+    }
+    
+    
+    func testFetchCommentShouldAskCommentWorkerToFetchCommentAndPresenterToShowError()
+    {
+        // Given
+        interactorUnderTest.referencePost = Seeds.Posts.firstPost
+
+        let commentPresentationLogicSpy = CommentListPresentationLogicSpy()
+        interactorUnderTest.presenter = commentPresentationLogicSpy
+        let commentWorkerSpy = CommentWorkerGeneralErrorSpy.init()
+        interactorUnderTest.worker = commentWorkerSpy
+        
+        // When
+        let request = CommentSection.FetchCommentList.Request(postId: String(interactorUnderTest.referencePost.id))
+        interactorUnderTest.fetchCommentDetails(request: request, order: .ascending, pageNumber: 1)
+        
+        // Then
+        XCTAssert(commentWorkerSpy.fetchCommentListCalled, "fetchCommentDetails() should ask comment worker to fetch comment")
+        XCTAssert(commentPresentationLogicSpy.presentCommentListCalled, "fetchCommentDetails() should ask presenter to show error")
+    }
+    
+    
+    func testFetchCommentDetailsWithoutPostId()
+    {
+        // Given
+        interactorUnderTest.referencePost = Seeds.Posts.firstPost
+
+        let commentPresentationLogicSpy = CommentListPresentationLogicSpy()
+        interactorUnderTest.presenter = commentPresentationLogicSpy
+        let commentWorkerSpy = CommentWorkerGeneralErrorSpy.init()
+        interactorUnderTest.worker = commentWorkerSpy
+        
+        // When
+        let request = CommentSection.FetchCommentList.Request()
+        interactorUnderTest.fetchCommentDetails(request: request, order: .ascending, pageNumber: 1)
+        
+        // Then
+        XCTAssertFalse(commentWorkerSpy.fetchCommentListCalled, "fetchCommentDetails() should not ask comment worker to fetch comment")
+        XCTAssert(commentPresentationLogicSpy.presentCommentListCalled, "fetchCommentDetails() should ask presenter to show error")
+    }
 
 }

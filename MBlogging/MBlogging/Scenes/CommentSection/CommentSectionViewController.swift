@@ -120,6 +120,7 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
         //Configure tableview setting
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 400
+        tableView.allowsSelection = false;
     }
     
     

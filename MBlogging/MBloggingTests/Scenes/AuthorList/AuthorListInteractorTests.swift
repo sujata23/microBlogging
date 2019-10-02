@@ -55,13 +55,47 @@ class AuthorListInteractorTests: XCTestCase
     
     // MARK: Spied methods
     
-    override func fetchAuthorList(url: String, pageNumber: Int, completionHandler: @escaping ([Author]?, MBError?) -> Void)
-    {
+    override func fetchAuthorList(url: String, pageNumber: Int, sortOrder: SortOrder, completionHandler: @escaping ([Author]?, MBError?) -> Void) {
+        
         fetchAuthorsCalled = true
         completionHandler([Seeds.Authors.firstAuthor , Seeds.Authors.secondAuthor], nil)
     }
     
   }
+    
+    class AuthorsWorkerErrorSpy: AuthorListWorker
+    {
+        // MARK: Method call expectations
+        
+        var fetchAuthorsCalled = false
+        
+        // MARK: Spied methods
+        
+        override func fetchAuthorList(url: String, pageNumber: Int, sortOrder: SortOrder, completionHandler: @escaping ([Author]?, MBError?) -> Void) {
+            
+            fetchAuthorsCalled = true
+            completionHandler([], nil)
+        }
+        
+    }
+    
+    
+    class AuthorsWorkerGeneralErrorSpy: AuthorListWorker
+    {
+        // MARK: Method call expectations
+        
+        var fetchAuthorsCalled = false
+        
+        // MARK: Spied methods
+        
+        override func fetchAuthorList(url: String, pageNumber: Int, sortOrder: SortOrder, completionHandler: @escaping ([Author]?, MBError?) -> Void) {
+            
+            fetchAuthorsCalled = true
+            let error = MBError.init(mbErrorCode: .GeneralError)
+            completionHandler(nil, error)
+        }
+        
+    }
   
   // MARK: - Tests
     
@@ -74,12 +108,54 @@ class AuthorListInteractorTests: XCTestCase
         interactorUnderTest.worker = authorsWorkerSpy
         
         // When
-        let request = AuthorList.FetchAuthorList.Request.init(pageNumber: 1, urlToRequest: "sampleURL")
+        let request = AuthorList.FetchAuthorList.Request(pageNumber: 1, urlToRequest: "sampleURL", sortOrder: .ascending)
         interactorUnderTest.fetchAuthors(request: request)
         
         // Then
         XCTAssert(authorsWorkerSpy.fetchAuthorsCalled, "fetchAuthorsCalled() should ask AuthorWorker to fetch Authors")
         XCTAssert(authorPresentationLogicSpy.presentAuthorListCalled, "FetchAuthors() should ask presenter to show author result")
     }
+    
+    
+    
+    func testFetchAuthorsShouldAskAuthorWorkerToFetchAuthorAndPresenterToShowFullyLoadedData()
+    {
+        // Given
+        let authorPresentationLogicSpy = AuthorListPresentationLogicSpy()
+        interactorUnderTest.presenter = authorPresentationLogicSpy
+        let authorsWorkerSpy = AuthorsWorkerErrorSpy.init()
+        interactorUnderTest.worker = authorsWorkerSpy
+        
+        // When
+        let request = AuthorList.FetchAuthorList.Request(pageNumber: 1, urlToRequest: "sampleURL", sortOrder: .ascending)
+        interactorUnderTest.fetchAuthors(request: request)
+        
+        // Then
+        XCTAssert(authorsWorkerSpy.fetchAuthorsCalled, "fetchAuthorsCalled() should ask AuthorWorker to fetch Authors")
+        XCTAssert(authorPresentationLogicSpy.presentAuthorListCalled, "FetchAuthors() should ask presenter to show author result")
+    }
+    
+    
+    func testFetchAuthorsShouldAskAuthorWorkerToFetchAuthorAndPresenterToShowError()
+    {
+        // Given
+        let authorPresentationLogicSpy = AuthorListPresentationLogicSpy()
+        interactorUnderTest.presenter = authorPresentationLogicSpy
+        let authorsWorkerSpy = AuthorsWorkerGeneralErrorSpy.init()
+        interactorUnderTest.worker = authorsWorkerSpy
+        
+        // When
+        let request = AuthorList.FetchAuthorList.Request(pageNumber: 1, urlToRequest: "sampleURL", sortOrder: .ascending)
+        interactorUnderTest.fetchAuthors(request: request)
+        
+        // Then
+        XCTAssert(authorsWorkerSpy.fetchAuthorsCalled, "fetchAuthorsCalled() should ask AuthorWorker to fetch Authors")
+        XCTAssert(authorPresentationLogicSpy.presentAuthorListCalled, "FetchAuthors() should ask presenter to show author result")
+    }
+    
+    
+    
+    
+   
  
 }

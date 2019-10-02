@@ -18,11 +18,11 @@ class CommentSectionViewControllerTests: XCTestCase {
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         window = UIWindow()
-        setupListAuthorViewController()
+        setupListCommentViewController()
     }
 
     
-    func setupListAuthorViewController()
+    func setupListCommentViewController()
     {
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
@@ -129,7 +129,7 @@ class CommentSectionViewControllerTests: XCTestCase {
     }
 
     
-    func testNumberOfRowsInAnySectionShouldEqaulNumberOfAuthorsToDisplay()
+    func testNumberOfRowsInAnySectionShouldEqaulNumberOfCommentsToDisplay()
     {
         // Given
         let commentBusinessLogicSpy = CommentBusinessLogicSpy()
@@ -161,7 +161,7 @@ class CommentSectionViewControllerTests: XCTestCase {
         let displayedComment = [CommentSection.FetchCommentList.ViewModel.DisplayedComment.init(userName: "testCommenter", date: Seeds.UtilityTest.modifiedDate, body: "This is a test comment", avatarUrl: "demo url")]
         let viewModel = CommentSection.FetchCommentList.ViewModel(commentList: displayedComment)
         currentControllerUnderTest.displayCommentList(viewModel: viewModel)
-        let cell = currentControllerUnderTest.tableView(tableView!, cellForRowAt: IndexPath.init(row: 0, section: 0))
+        let cell = currentControllerUnderTest.tableView(tableView!, cellForRowAt: IndexPath.init(row: 0, section: 0)) as! CommentCell
 
         // Then
         XCTAssertEqual(cell.userName.text, "testCommenter", "A properly configured table view cell should display the post user name")
@@ -169,5 +169,60 @@ class CommentSectionViewControllerTests: XCTestCase {
         XCTAssertEqual(cell.postBody.text, "This is a test comment", "A properly configured table view cell should display the post body")
 
     }
+    
+    
+    func testAfterFetchingCompleteDataNoMoreDataShouldFetch()
+    {
+        // Given
+        let tableViewSpy = TableViewSpy()
+        currentControllerUnderTest.tableView = tableViewSpy
+        
+        // When
+        let error = MBError.init(mbErrorCode: .EmptyData)
+        currentControllerUnderTest.errorReceivedInCommentFetchRequest(error: error)
+        
+        // Then
+        XCTAssert(tableViewSpy.reloadDataCalled, "Displaying fetched comments should  remoce loader cell")
+        XCTAssertFalse(currentControllerUnderTest.isPaginationRequired, "No more pagination should happen")
+        
+    }
+    
+    func testErrorWhileFetchingCommenr()
+    {
+        // Given
+        let tableViewSpy = TableViewSpy()
+        currentControllerUnderTest.tableView = tableViewSpy
+        
+        // When
+        let error = MBError.init(mbErrorCode: .GeneralError)
+        currentControllerUnderTest.pageToBeFetched = 2
+        currentControllerUnderTest.errorReceivedInCommentFetchRequest(error: error)
+        
+        
+        // Then
+        XCTAssertFalse(tableViewSpy.reloadDataCalled, "Reload data should not get called")
+        XCTAssertTrue(currentControllerUnderTest.pageToBeFetched == 1, "page number should decreasedagain")
+        
+    }
+    
+    func testErrorWhileFetchingCommentForPageOne()
+    {
+        // Given
+        let tableViewSpy = TableViewSpy()
+        currentControllerUnderTest.tableView = tableViewSpy
+        
+        // When
+        let error = MBError.init(mbErrorCode: .GeneralError)
+        currentControllerUnderTest.errorReceivedInCommentFetchRequest(error: error)
+        
+        
+        // Then
+        XCTAssertFalse(tableViewSpy.reloadDataCalled, "Reload data should not get called")
+        XCTAssertTrue(currentControllerUnderTest.pageToBeFetched == 1, "page number should decreasedagain")
+        
+    }
+    
+    
+
 
 }
