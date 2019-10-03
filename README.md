@@ -9,3 +9,5 @@
  Written in Clean architecture.
  
  The application handles Network state , lazy loading .
+ 
+ All Post list and comment List are shown in ascending order chronically.
