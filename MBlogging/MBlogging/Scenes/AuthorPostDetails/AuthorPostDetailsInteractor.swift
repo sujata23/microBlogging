@@ -70,7 +70,7 @@ class AuthorPostDetailsInteractor: AuthorPostDetailsBusinessLogic, AuthorPostDet
         
         weak var weakself = self
         
-        worker.fetchPostDetails(url: Constants.baseURL, authorID: authorId, order: order) { (postList, error) in
+        worker.fetchPostDetails(url: Constants.kBaseURL, authorID: authorId, order: order) { (postList, error) in
             
             if let postList = postList
             {

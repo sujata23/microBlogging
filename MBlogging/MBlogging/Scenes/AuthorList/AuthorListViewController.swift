@@ -46,7 +46,7 @@ class AuthorListViewController: BaseTableViewController, AuthorListDisplayLogic
     
     //Properties
     
-    var pageToBeFetched = 1 // Maintains page number to be fetched. Value will be incremented with User scrolling
+    var pageToBeFetched = Constants.kInitialPageNumberToBeFetched // Maintains page number to be fetched. Value will be incremented with User scrolling
     
     
     // MARK: Object lifecycle
@@ -74,7 +74,13 @@ class AuthorListViewController: BaseTableViewController, AuthorListDisplayLogic
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchAuthors()
+        
+        if displayedAuthors.count == 0
+        {
+            // to avoid loaing authors while coming back from postdetails page
+            fetchAuthors()
+
+        }
     }
     
     // MARK: Setup
@@ -144,7 +150,7 @@ class AuthorListViewController: BaseTableViewController, AuthorListDisplayLogic
      */
     func fetchAuthors()
     {   isOngoingRequest = true
-        let request = AuthorList.FetchAuthorList.Request(pageNumber: pageToBeFetched, urlToRequest: Constants.baseURL , sortOrder: .ascending)
+        let request = AuthorList.FetchAuthorList.Request(pageNumber: pageToBeFetched, urlToRequest: Constants.kBaseURL , sortOrder: .ascending)
         interactor?.fetchAuthors(request: request)
     }
     

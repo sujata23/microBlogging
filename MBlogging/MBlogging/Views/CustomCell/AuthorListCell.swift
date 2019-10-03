@@ -67,6 +67,6 @@ class AuthorListCell : UITableViewCell
     
     class func retreiveCellHeight() -> CGFloat
     {
-        return 100.0
+        return CGFloat(Constants.kDefaultCellHeight)
     }
 }

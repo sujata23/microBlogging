@@ -28,8 +28,16 @@ class CommentSectionWorker : BaseWorkerClass
      */
     func fetchComments(url : String , pageNumber : Int? , postId : String, sortOrder : SortOrder ,completionHandler: @escaping (_: [Comment]?, _: MBError?) -> Void)
     {
+        guard NetworkManager.sharedInstance.isInternetAccessible == true else {
+            
+            let mbError = MBError.init(mbErrorCode: MBErrorCode.NetworkError)
+            mbError.mbErrorDebugInfo = "Network absent while fetching comment list"
+            completionHandler(nil , mbError)
+            
+            return
+        }
         
-        let urlToRequest = createURLStringWith(baseUrl: url, sortOrder: sortOrder, requestForEntity: Constants.commentsURLParameter, queryString: "postId=\(postId)", pageIndexToBeFetched: pageNumber)
+        let urlToRequest = createURLStringWith(baseUrl: url, sortOrder: sortOrder, requestForEntity: Constants.kCommentsURLParameter, queryString: "postId=\(postId)", pageIndexToBeFetched: pageNumber)
         
         if let urlToRequest = urlToRequest {
             
@@ -47,7 +55,7 @@ class CommentSectionWorker : BaseWorkerClass
                     } else if
                         let data = data,
                         let response = response as? HTTPURLResponse,
-                        response.statusCode == 200 {
+                        response.statusCode == Constants.kServerSuccessResponseCode {
                         
                         DispatchQueue.main.async {
                             do

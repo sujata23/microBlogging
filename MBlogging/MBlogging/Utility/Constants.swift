@@ -21,10 +21,13 @@ enum SortOrder :String{
 class Constants
 {
     
-    static let baseURL =  "https://sym-json-server.herokuapp.com/"
-    static let authorURLParameter =  "authors"
-    static let postURLParameter =  "posts"
-    static let commentsURLParameter =  "comments"
+    static let kBaseURL =  "https://sym-json-server.herokuapp.com/"
+    static let kAuthorURLParameter =  "authors"
+    static let kPostURLParameter =  "posts"
+    static let kCommentsURLParameter =  "comments"
+    static let kInitialPageNumberToBeFetched =  1
+    static let kDefaultCellHeight =  100
+    static let kServerSuccessResponseCode =  200
 
     
     

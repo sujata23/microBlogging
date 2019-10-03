@@ -46,7 +46,7 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
 
     
     //Property
-    var pageToBeFetched = 1 // Maintains page number to be fetched. Value will be incremented with User scrolling
+    var pageToBeFetched = Constants.kInitialPageNumberToBeFetched // Maintains page number to be fetched. Value will be incremented with User scrolling
 
     
     var interactor: CommentSectionBusinessLogic?

@@ -274,7 +274,7 @@ final class ImageDownloader : NSObject
         if status == true {
             let httpResponse = response as! HTTPURLResponse
             
-            if httpResponse.statusCode != 200 {
+            if httpResponse.statusCode != Constants.kServerSuccessResponseCode {
                 
                 status = false
             }

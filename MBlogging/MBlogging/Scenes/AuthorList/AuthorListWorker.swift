@@ -25,10 +25,20 @@ class AuthorListWorker : BaseWorkerClass
     */
     func fetchAuthorList(url: String, pageNumber : Int , sortOrder : SortOrder,  completionHandler: @escaping (_: [Author]?, _: MBError?) -> Void)
     {
-        var authorFectchUrl = url
-        authorFectchUrl = authorFectchUrl + Constants.authorURLParameter
         
-        let urlToRequest = createURLStringWith(baseUrl: url, sortOrder: sortOrder, requestForEntity: Constants.authorURLParameter, queryString: nil, pageIndexToBeFetched: pageNumber)
+        guard NetworkManager.sharedInstance.isInternetAccessible == true else {
+            
+            let mbError = MBError.init(mbErrorCode: MBErrorCode.NetworkError)
+            mbError.mbErrorDebugInfo = "Network absent while fetching authors"
+            completionHandler(nil , mbError)
+            
+            return
+        }
+        
+        var authorFectchUrl = url
+        authorFectchUrl = authorFectchUrl + Constants.kAuthorURLParameter
+        
+        let urlToRequest = createURLStringWith(baseUrl: url, sortOrder: sortOrder, requestForEntity: Constants.kAuthorURLParameter, queryString: nil, pageIndexToBeFetched: pageNumber)
         
         if let url = urlToRequest {
             
@@ -47,7 +57,7 @@ class AuthorListWorker : BaseWorkerClass
                     } else if
                         let data = data,
                         let response = response as? HTTPURLResponse,
-                        response.statusCode == 200 {
+                        response.statusCode == Constants.kServerSuccessResponseCode {
                         
                         DispatchQueue.main.async {
                             do

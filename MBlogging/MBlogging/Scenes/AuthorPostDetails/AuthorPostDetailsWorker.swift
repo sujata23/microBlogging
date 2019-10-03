@@ -26,7 +26,17 @@ class AuthorPostDetailsWorker : BaseWorkerClass
     func fetchPostDetails(url : String , authorID : String, order : SortOrder , completionHandler: @escaping (_: [Post]?, _: MBError?) -> Void)
     {
         
-        let urlToRequest = createURLStringWith(baseUrl: url, sortOrder: order, requestForEntity: Constants.postURLParameter, queryString: "authorId=\(authorID)", pageIndexToBeFetched: nil)
+        guard NetworkManager.sharedInstance.isInternetAccessible == true else {
+            
+            let mbError = MBError.init(mbErrorCode: MBErrorCode.NetworkError)
+            mbError.mbErrorDebugInfo = "Network absent while fetching post details"
+            completionHandler(nil , mbError)
+            
+            return
+        }
+        
+        
+        let urlToRequest = createURLStringWith(baseUrl: url, sortOrder: order, requestForEntity: Constants.kPostURLParameter, queryString: "authorId=\(authorID)", pageIndexToBeFetched: nil)
         
         if let urlToReq = urlToRequest {
             
@@ -44,7 +54,7 @@ class AuthorPostDetailsWorker : BaseWorkerClass
                     } else if
                         let data = data,
                         let response = response as? HTTPURLResponse,
-                        response.statusCode == 200 {
+                        response.statusCode == Constants.kServerSuccessResponseCode {
                         
                         DispatchQueue.main.async {
                             do

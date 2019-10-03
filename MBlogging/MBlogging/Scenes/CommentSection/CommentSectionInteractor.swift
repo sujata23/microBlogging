@@ -59,7 +59,7 @@ class CommentSectionInteractor: CommentSectionBusinessLogic, CommentSectionDataS
         
         weak var weakSelf = self
         
-        worker?.fetchComments(url: Constants.baseURL, pageNumber: pageNumber, postId: postId, sortOrder: order, completionHandler: { (commentList, error) in
+        worker?.fetchComments(url: Constants.kBaseURL, pageNumber: pageNumber, postId: postId, sortOrder: order, completionHandler: { (commentList, error) in
             
             if let commentList = commentList
             {

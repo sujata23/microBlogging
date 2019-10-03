@@ -138,7 +138,7 @@ class AuthorPostDetailsViewController: UITableViewController, AuthorPostDetailsD
         
         //Configure tableview setting
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 200
+        tableView.estimatedRowHeight = CGFloat(Constants.kDefaultCellHeight)
     }
     
     
