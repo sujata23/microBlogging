@@ -36,7 +36,8 @@ class AuthorListViewController: BaseTableViewController, AuthorListDisplayLogic
     //Constant
     
     static let cellIdentifier =  "authorListCell"
-    
+    static let cellIdentifierLoading =  "LoadingCell"
+
     //Clean Architectire Variables
     
     var interactor: AuthorListBusinessLogic?
@@ -131,8 +132,8 @@ class AuthorListViewController: BaseTableViewController, AuthorListDisplayLogic
         self.tableView.register(authorListCell, forCellReuseIdentifier: AuthorListViewController.cellIdentifier)
         //Loading cell register
         
-        let loadingNib = UINib(nibName: "LoadingCell", bundle: nil)
-        self.tableView.register(loadingNib, forCellReuseIdentifier: "loadingCell")
+        let loadingNib = UINib(nibName: AuthorListViewController.cellIdentifierLoading, bundle: nil)
+        self.tableView.register(loadingNib, forCellReuseIdentifier: AuthorListViewController.cellIdentifierLoading)
     }
     
     
@@ -222,7 +223,7 @@ class AuthorListViewController: BaseTableViewController, AuthorListDisplayLogic
             
         } else {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "loadingCell", for: indexPath) as! LoadingCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: AuthorListViewController.cellIdentifierLoading, for: indexPath) as! LoadingCell
             cell.spinner.startAnimating()
             return cell
         }

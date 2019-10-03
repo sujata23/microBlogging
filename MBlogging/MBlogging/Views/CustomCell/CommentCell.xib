@@ -22,7 +22,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="gWH-Dc-kDd"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -31,13 +31,13 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="nEi-pt-Wut"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <nil key="textColor"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                        <color key="textColor" white="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jCS-24-EEJ">
-                        <rect key="frame" x="10" y="95" width="547" height="108.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <rect key="frame" x="10" y="95" width="547" height="103.5"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -51,7 +51,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="1kH-9a-bel" firstAttribute="leading" secondItem="aTX-yq-kE5" secondAttribute="trailing" id="0J4-5a-Fva"/>
-                    <constraint firstAttribute="bottom" secondItem="jCS-24-EEJ" secondAttribute="bottom" constant="5" id="3h0-ei-f4g"/>
+                    <constraint firstAttribute="bottom" secondItem="jCS-24-EEJ" secondAttribute="bottom" constant="10" id="3h0-ei-f4g"/>
                     <constraint firstItem="VKl-OR-Eb7" firstAttribute="top" secondItem="1kH-9a-bel" secondAttribute="bottom" id="47J-7d-FeP"/>
                     <constraint firstItem="VKl-OR-Eb7" firstAttribute="leading" secondItem="1kH-9a-bel" secondAttribute="leading" id="790-ln-5lk"/>
                     <constraint firstItem="VKl-OR-Eb7" firstAttribute="trailing" secondItem="1kH-9a-bel" secondAttribute="trailing" id="9uj-m6-n8p"/>

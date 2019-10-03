@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //Starting network
         NetworkManager.sharedInstance.startReachabilityMonitoring()
-        
         NetworkManager.sharedInstance.refreshConnectionState()
         
         return true

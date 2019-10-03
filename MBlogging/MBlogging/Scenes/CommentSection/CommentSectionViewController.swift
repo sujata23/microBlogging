@@ -42,6 +42,8 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
     //Constant
     
     static let cellIdentifier =  "CommentCell"
+    static let cellIdentifierLoading =  "LoadingCell"
+
     
     //Property
     var pageToBeFetched = 1 // Maintains page number to be fetched. Value will be incremented with User scrolling
@@ -129,8 +131,8 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
         let authorListCell = UINib(nibName: "CommentCell", bundle: nil)
         self.tableView.register(authorListCell, forCellReuseIdentifier: CommentSectionViewController.cellIdentifier)
         
-        let loadingNib = UINib(nibName: "LoadingCell", bundle: nil)
-        self.tableView.register(loadingNib, forCellReuseIdentifier: "loadingCell")
+        let loadingNib = UINib(nibName: CommentSectionViewController.cellIdentifierLoading, bundle: nil)
+        self.tableView.register(loadingNib, forCellReuseIdentifier: CommentSectionViewController.cellIdentifierLoading)
     }
     
     //MARK: Data Fetch functions
@@ -242,7 +244,7 @@ class CommentSectionViewController: BaseTableViewController, CommentSectionDispl
         }
         else {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "loadingCell", for: indexPath) as! LoadingCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CommentSectionViewController.cellIdentifierLoading, for: indexPath) as! LoadingCell
             cell.spinner.startAnimating()
             return cell
         }
